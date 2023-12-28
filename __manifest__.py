@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "gestion_proyectos",
+    'name': "Gestión de Proyectos",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Módulo para la gestión de proyectos de diverso tipo en MaxPower.""",
 
     'description': """
-        Long description of module's purpose
+        Este módulo ayuda a gestionar todos los estados por los que puede pasar un proyecto en MaxPower. Incluimos la gestión de: nuevos proyectos,
+        editar proyectos, comprobar proyectos y eliminar proyectos. Cada uno con sus opciones asociadas.
     """,
 
-    'author': "My Company",
-    'website': "http://www.yourcompany.com",
+    'author': "Francisco Armenta López",
+    'website': "http://www.github.com/frarlo",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
-    'category': 'Uncategorized',
+    'category': 'Services', # Not sure
     'version': '0.1',
 
     # any module necessary for this one to work correctly
