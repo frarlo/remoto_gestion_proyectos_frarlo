@@ -29,33 +29,11 @@ Este módulo gestionará:
 
         - Mismos campos de arriba.
 
-### SERVICIO
+### COMPROBAR PROYECTO:
 
-        - Para realizar servicios sobre un proyecto YA ACABADO:
+### ELIMINAR PROYECTO:
 
-#### Servicio de Revisión
 
-        - ID del proyecto: GENERADO
-        - Fecha de revisión: asignar
-        - Cliente asociado: asignar
-        - Garantía: GENERADO
-        - Asignar personal:
-        - Conclusión de la revisión: Notas del personal.
-        - Recomendación de acción: FAVORABLE / DESFAVORABLE 
-        - Si es desfavorable: ESPECIFICA.   
-
-#### Servicio de Reparación
-
-        - Datos del proyecto: GENERADO
-        - Siniestro: lo que ha dicho el cliente
-        - Fecha de comprobación: se acuerda con cliente
-        - Asignar personal: asignar.
-        - Conclusión personal: 
-            - Tipo de reparación:
-                - Reparativa
-                - Sustitutiva
-        - Coste (comprobar garantía)
-        - Completada
 
 ## Mapa del Módulo
 
