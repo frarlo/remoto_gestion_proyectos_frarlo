@@ -3,7 +3,7 @@
     'name': "Gestión de Proyectos",
 
     'summary': """
-        Módulo para la gestión de proyectos de diverso tipo en MaxPower.""",
+        Módulo para la gestión de proyectos de diversos tipos en MaxPower.""",
 
     'description': """
         Este módulo ayuda a gestionar todos los estados por los que puede pasar un proyecto en MaxPower. Incluimos la gestión de: nuevos proyectos,
