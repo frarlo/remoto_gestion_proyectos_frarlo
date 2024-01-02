@@ -10,142 +10,163 @@ Este módulo gestionará los Proyectos de MaxPower. Incluyendo la creación, edi
 
 ## Descripción Detallada
 
-Este módulo gestionará:
+Este módulo gestionará cuatro tipos de trabajos sobre la gestión de proyectos:
 
-### NUEVO PROYECTO:
+### Gestión 1 - Creación de un nuevo Proyecto:
 
-        - Cliente: A quién va destinada la instalación del proyecto.
-        - Producto: Qué producto se instala, cuántos se necesita.
-        - Garantía: Asociada al producto.
-        - Licencia: Dependiendo de la legislación, algunos productos a instalar necesitaŕan una licencia.
-        - Operarios asignados: Dependiendo del producto a instalar serán más o menos.
-        - Dietas: Dependiendo de la duración de la instalación existirán más o menos.
-        - Fecha de inicio: En función de las necesidades del cliente y de agenda de la empresa se proporcionará una fecha de inicio.
-        - Plazo estimado: En función de la longitud del proyecto se asignará una 
-        fecha de terminación aproximada.
-        - Vehículo asignado: Cada proyecto deberá tener asignado un vehículo de la empresa.
+Creará un nuevo Proyecto con los siguientes campos:
 
-### EDITAR PROYECTO:
+- Cliente del Proyecto.
+- Producto/s asociados al Proyecto.
+- Licencia, que puede ser de tipo normal o especial. En caso de ser especial
+(no es una simple licencia de obra) ha de ser gestionada con el módulo Gestión
+de Licencias.
+- Operarios asignados al Proyecto.
+- Vehículo de la flota asignado al Proyecto.
+- Fecha de inicio.
+- Plazo estimado de finalización.
+- Dietas asociadas al Proyecto.
 
-        - Mismos campos de arriba.
+Además, se generará un ID de Proyecto de forma automática (hash).
 
-### COMPROBAR PROYECTO:
+### Gestión 2 - Edición de un Proyecto existente:
 
-### ELIMINAR PROYECTO:
+Editará un Proyecto ya existente. Se pueden editar todos los campos salvo el ID del Proyecto, ya que es generado automáticamente por el sistema. Los campos son los mismos que en la gestión 1:
 
+- Cliente.
+- Producto/s.
+- Opción de revisar Licencia - Al estar editando un Proyecto inicializará el módulo de Gestión de Licencia directamente en modo Editar.
+- Operarios.
+- Vehículo.
+- Fecha de inicio.
+- Plazo estimado de finalización.
+- Dietas asociadas.
+
+### Gestión 3 - Consultar un Proyecto existente:
+
+Mostrará el estado actual del Proyecto existente, por lo que los campos sólo se podran consultar y no editar. Además, aquí aparece un nuevo campo, el del estado del Proyecto que tendrá los siguientes estados:
+
+- En tramitación: creado y esperando OK de Licencia/s.
+- Congelado: creado pero hay que gestionar algo relacionado con Licencia/s.
+- Preparado: Preparado para empezar.
+- En curso: En realización.
+- Parado: Parado por algún motivo después de haber empezado.
+- Finalizado: Terminado.
+
+### Gestión 4 - Eliminar un Proyecto existente:
+
+Eliminará un Proyecto de nuestro módulo. Sólo se podrán eliminar Proyectos que aún no hayan pasado al estado "En curso". Ofrecerá los siguientes campos:
+
+- ID del Proyecto.
+- Estado actual del Proyecto.
+- Comprobación/check de que "confirmo que quiero eliminar el Proyecto..."
 
 
 ## Mapa del Módulo
 
-Diagrama o descripción visual que representa la estructura general del módulo.
+![Mapa del módulo](img/general.png)
 
 ## Dependencias de Otros Módulos
 
-Depende de ADMINISTRACIÓN Y FINANZAS -> CLIENTE (Nombre, dirección, etc)
-Depende de LOGÍSTICA -> PRODUCTO (Stock de los productos a instalar)
-Depende de LOGISTICA -> VEHICULO (A utilizar)
-Depende de OPERARIO
+Depende de 'Administración y Finanzas' -> Cliente (Nombre, dirección, etc.).
+Depende de 'Logística' -> Producto (Stock de los productos a instalar).
+Depende de 'Logística' -> Flota/vehículo (A utilizar en el Proyecto).
+Depende de 'Empleados' -> Operario (Que realizará el Proyecto).
+Puede depender de 'Gestión de Licencia' -> Licencia (Asociada).
+
+Nota: La posible existencia o ausencia de licencia dependerá del tipo de producto instalado, de la localización y el tamaño del mismo
+así como de las entes gubernamentales pertinentes. Por ejemplo, un equipo de climatización para un cliente particular no requerirá ningún
+tipo de licencia especial más allá de una autorización vecinal (incluso ni eso) que MaxPower no tiene que tramitar. Por otra parte, la instalación de Placas
+Fotovoltaicas en la terraza de un edificio de 20 pisos al lado de un parque natural sí puede suscribir la tramitación de varias licencias:
+licencia de obra, licencia de instalación fotovoltaica, autorización de conexión a red (si procede), etc.
 
 ## Wireframes de las Páginas
 
-- Pantalla 1: GESTIÓN DE PROYECTO -
-    - Nuevo
-    - Editar
-    - Servicio
-    - Borrar
+Pantalla de bienvenida del Gestor de Proyectos:
 
-- Pantalla 1-A: Nuevo
-    - Creación de un nuevo Proyecto
+![Landing del módulo](img/landing.png)
 
-- Pantalla 1-B: Editar
-    - Editar algún Proyecto (más, menos productos, etc.)
+Pantalla de tramitación de un nuevo proyecto:
 
-- Pantalla 1-C: Servicio
-    - Gestionamos un proyecto:
-        - Revisión
-        - Reparación
+![Creación de Proyecto nuevo](img/new.png)
 
-        - Pantalla 1-C-A: Revisión:
-            - Datos del proyecto
-            - Fecha de revisión
-            - Conclusión: FAVORABLE/DESFAVORABLE
-            - Recomendación: 
-            - Acciones: si FAVORABLE -> un año más si DESFAVORABLE -> REPARAR
-        
-        - Pantalla 1-C-B: Reparación:
-            - Datos del proyecto
-            - Siniestro:
-            - Fecha de comprobación:
-            - Invoca revisión
-            - Tipo de reparación:
-                - Reparativa
-                - Sustitutiva
-            - Coste (comprobar garantía)
-            - Completada
+Pantalla de edición de un proyecto existente:
+
+![Edición de Proyecto existente](img/edit.png)
+
+Pantalla de comprobación de una consulta de un proyecto existente:
+
+![Comprobación de un Proyecto existente](img/check.png)
+
+Pantalla de eliminación de un proyecto existente:
+
+![Eliminación de un Proyecto existente](img/delete.png)
+
 
 ## Control de Acceso
 
 ### Grupos de Acceso
 
 - Grupo Instalación y Reparación: Todos los miembros de este grupo pueden VER este módulo.
+
 - Gerente de Instalación y Reparación: este miembro puede VER, MODIFICAR Y BORRAR 
 todos los contenidos de este módulo.
+
 - Grupo Logístico: Todos los miembros de este grupo pueden VER este módulo.
-- Grupo Administración y Finanzas: Todos los miembros pueden VER este módulo.
 
-### Control de Acceso a Modelos
+- Grupo Administración y Finanzas: Todos los miembros pueden VER y MODIFICAR este módulo.
 
-- Modelo 1: Quién tiene acceso y qué permisos.
-- Modelo 2: Quién tiene acceso y qué permisos.
-- ...
-
-### Control de Acceso a Registros
-
-- Registro 1: Quién tiene acceso y qué permisos.
-- Registro 2: Quién tiene acceso y qué permisos.
-- ...
 
 ## Diagramas de Flujo Funcionales
 
-### Parte 1
+### Nuevo Proyecto:
 
-Diagrama de flujo funcional de la parte 1 del módulo.
+![Diagrama de flujo de nuevo proyecto](img/fluxnew.png)
 
-### Parte 2
+### Editar Proyecto:
 
-Diagrama de flujo funcional de la parte 2 del módulo.
+![Diagrama de flujo de editar proyecto](img/fluxedit.png)
 
-### ...
+### Comprobar Proyecto:
+
+![Diagrama de flujo de comprobación de proyecto](img/fluxcheck.png)
+
+### Eliminar Proyecto:
+
+![Diagrama de flujo de eliminación de proyecto](img/fluxdelete.png)
+
 
 ## Esquema Relacional de la Base de Datos
 
-### Nuevas Tablas
+### Nueva Tabla gestion_proyecto
 
-- Proyecto: 
-    - Clave primaria: ID del proyecto.
-    - Nombre identificativo del proyecto VARCHAR(60)
-    - Tipo de garantía asociada NOT NULL
-    - Tipo de licencia asociada NULL
-    - Instalación completada BOOLEAN
-    - Fecha inicio DATE
-    - Fecha fin DATE
-    - Producto a instalar NOTNULL
-    - Producto a instalar 2 NULLABLE
-    - Vehiculo asociado NOTNULL
-    - Dietas (otra tabla)
-    - Empleados (otra tabla)
+- Gestion Proyecto:
+    - gestion_proyecto.id = PRIMARY KEY. ID del Proyecto.
+    - gestion_proyecto.licencias = Licencias asociadas al proyecto.
+    - gestion_proyecto.productos = Productos asociados al proyecto.
+    - gestion_proyecto.vehiculo = Vehículo asociado.
+    - gestion_proyecto.cliente = Cliente asociado.
+    - gestion_proyecto.empleados = Empleados asociados.
+    - gestion_proyecto.estado = Estado (CHECK entre los estados mencionados anteriormente).
+    - gestion_proyecto.fechainicio = Fecha de inicio del proyecto.
+    - gestion_proyecto.fechaestimada = Fecha estimada de finalización.
+    - gestion_proyecto.dietas = Dietas asociadas.
 
-- Tabla 2: Descripción de la tabla y sus campos.
-- ...
+![Esquema E-R de la tabla 'gestion_licencia'](img/erdiag.png)
 
 ### Relación con Otras Tablas Existentes
 
-- Relación con Tabla X: Descripción de la relación.
+- Relación con tabla "res": coge res.partner (Cliente).
+- Relación con la tabla "product": coge product.product (Producto).
+- Relación con la tabla "hr": coge hr.employee (Operario).
+- Relación con la tabla "fleet": coge fleet.vehicle (Vehículo).
+- Posible relación con la tabla 'gestion_licencia": coge gestion_licencia.id (ID de la Licencia asociada).
 
 ## Comunicación con Otros Módulos
 
-- Formato del Mensaje: Descripción del formato del mensaje.
-- Estructura del Mensaje: Descripción detallada de la estructura del mensaje.
-- Protocolo: Descripción del protocolo utilizado para la comunicación.
+- Se comunicará con el módulo de Productos: quita existencias al iniciar un Proyecto.
+- Se comunicará con el módulo de Flotas: quita un vehículo disponible.
+- Se comunicará con el módulo de Empleados: comunicará que un Operario está trabajando en un Proyecto.
+- Se comunicará con el módulo de Clientes: comunicará al Cliente la confirmación de la fecha de inicio previamente pactada.
 
 
