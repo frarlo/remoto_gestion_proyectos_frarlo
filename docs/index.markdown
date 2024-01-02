@@ -68,10 +68,10 @@ Eliminará un Proyecto de nuestro módulo. Sólo se podrán eliminar Proyectos q
 
 ## Dependencias de Otros Módulos
 
-Depende de 'Administración y Finanzas' -> Cliente (Nombre, dirección, etc.).
-Depende de 'Logística' -> Producto (Stock de los productos a instalar).
-Depende de 'Logística' -> Flota/vehículo (A utilizar en el Proyecto).
-Depende de 'Empleados' -> Operario (Que realizará el Proyecto).
+- Depende de 'Administración y Finanzas' -> Cliente (Nombre, dirección, etc.).
+- Depende de 'Logística' -> Producto (Stock de los productos a instalar).
+- Depende de 'Logística' -> Flota/vehículo (A utilizar en el Proyecto).
+- Depende de 'Empleados' -> Operario (Que realizará el Proyecto).
 Puede depender de 'Gestión de Licencia' -> Licencia (Asociada).
 
 Nota: La posible existencia o ausencia de licencia dependerá del tipo de producto instalado, de la localización y el tamaño del mismo
