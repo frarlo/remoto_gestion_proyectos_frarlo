@@ -7,7 +7,7 @@
 
     'description': """
         Este módulo ayuda a gestionar todos los estados por los que puede pasar un proyecto en MaxPower. Incluimos la gestión de: nuevos proyectos,
-        editar proyectos, comprobar proyectos y eliminar proyectos. Cada uno con sus opciones asociadas.
+        editar proyectos, comprobar proyectos y eliminar proyectos. Cada uno con sus opciones asociadas (incluyendo gestión de Almacén).
     """,
 
     'author': "Francisco Armenta López",
@@ -22,9 +22,12 @@
     # any module necessary for this one to work correctly
     'depends': ['base'],
 
+    # application true
+    'application': True,
+
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
     ],
