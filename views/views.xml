@@ -1,29 +1,82 @@
 <odoo>
   <data>
     <!-- explicit list view definition -->
-<!--
     <record model="ir.ui.view" id="gestion_proyectos.list">
-      <field name="name">gestion_proyectos list</field>
-      <field name="model">gestion_proyectos.gestion_proyectos</field>
+      <field name="name">Lista de proyectos </field>
+      <field name="model">gestion_proyectos.project</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
+          <field name="id"/>
+          <field name="fase"/>
+          <field name="cliente_id"/>
+          <field name="ingeniero_id"/>
         </tree>
       </field>
     </record>
--->
+
+    <record model="ir.ui.view" id="gestion_proyectos.create_project">
+      <field name="name">Crear proyecto</field>
+      <field name="model">gestion_proyectos.project</field>
+        <field name="arch" type="xml">
+          <form>
+            <header>
+              <field name="fase" widget="statusbar" options="{'clickable': '0'}"/>
+            </header>
+            <sheet>
+                <group>
+                  <field name="id" string="ID Proyecto"/>
+                </group>
+                <group>
+                  <field name="cliente_id" string="Cliente"/>
+                  <field name="productos" string="Productos"/>
+                  <field name="ingeniero_id" string="Ingeniero"/>
+                </group>
+                <group>
+                  <field name="fecha_inicio" string="Fecha inicio"/>
+                  <field name="fecha_estimada" string="Fecha estimada"/>
+                </group>
+              <notebook>
+                <page string="Tareas" name="page_1">
+                  
+                </page>
+                <page string="Diseño" name="page_2">
+                  
+                </page>
+                <page string="Materiales" name="page_3">
+                  
+                </page>
+                <page string="Productos" name="page_4">
+                  
+                </page>
+                <page string="Operarios" name="page_5">
+                  
+                </page>
+                <page string="Vehículo" name="page_6">
+                  
+                </page>
+                <page string="Hitos" name="page_7">
+                  
+                </page>                 
+              </notebook>
+            </sheet>
+          </form>
+        </field>
+    </record>
+
+
 
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="gestion_proyectos.action_window">
-      <field name="name">gestion_proyectos window</field>
-      <field name="res_model">gestion_proyectos.project</field>
-<!-- WAS: <field name="res_model">gestion_proyectos.gestion_proyectos</field> -->
-
-      <field name="view_mode">tree,form</field>
+        <field name="name">Gestion de Proyectos</field>
+        <field name="res_model">gestion_proyectos.project</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="gestion_proyectos.list"/>
     </record>
+
+
+
+
 
 
     <!-- server action to the one above -->
@@ -48,12 +101,18 @@
 
     <!-- menu categories -->
 
-    <menuitem name="Crear" id="gestion_proyectos.menu_1" parent="gestion_proyectos.menu_root"/>
+    <menuitem name="Proyecto" id="gestion_proyectos.menu_1" parent="gestion_proyectos.menu_root"/>
 <!--<menuitem name="Menu 2" id="gestion_proyectos.menu_2" parent="gestion_proyectos.menu_root"/>
 -->
     <!-- actions -->
 
-    <menuitem name="List" id="gestion_proyectos.menu_1_list" parent="gestion_proyectos.menu_1"
+    <menuitem name="Crear" id="gestion_proyectos.menu_1_list" parent="gestion_proyectos.menu_1"
+              action="gestion_proyectos.action_window"/>
+    <menuitem name="Editar" id="gestion_proyectos.menu_2_list" parent="gestion_proyectos.menu_1"
+              action="gestion_proyectos.action_window"/>
+    <menuitem name="Comprobar" id="gestion_proyectos.menu_3_list" parent="gestion_proyectos.menu_1"
+              action="gestion_proyectos.action_window"/>
+    <menuitem name="Eliminar" id="gestion_proyectos.menu_4_list" parent="gestion_proyectos.menu_1"
               action="gestion_proyectos.action_window"/>
 <!--   <menuitem name="Server to list" id="gestion_proyectos" parent="gestion_proyectos.menu_2"
               action="gestion_proyectos.action_server"/>
