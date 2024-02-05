@@ -1,6 +1,7 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
+
+    <!-- explicit list view definition // Vista de inicio del módulo (Resumen general de todos los proyectos existentes)-->
     <record model="ir.ui.view" id="gestion_proyectos.list">
       <field name="name">Lista de proyectos </field>
       <field name="model">gestion_proyectos.project</field>
@@ -14,52 +15,83 @@
       </field>
     </record>
 
+    <!-- Vista de Creación de Proyecto -->
     <record model="ir.ui.view" id="gestion_proyectos.create_project">
       <field name="name">Crear proyecto</field>
       <field name="model">gestion_proyectos.project</field>
         <field name="arch" type="xml">
           <form>
+            <!-- El header nos indica la fase actual del Proyecto-->
             <header>
               <field name="fase" widget="statusbar" options="{'clickable': '0'}"/>
             </header>
+
+            <!-- La parte de arriba de la vista muestra los datos básicos del Proyecto-->
             <sheet>
                 <group>
                   <field name="id" string="ID Proyecto"/>
                 </group>
                 <group>
                   <field name="cliente_id" string="Cliente"/>
-                  <field name="productos" string="Productos"/>
+                  
                   <field name="ingeniero_id" string="Ingeniero"/>
                 </group>
                 <group>
                   <field name="fecha_inicio" string="Fecha inicio"/>
                   <field name="fecha_estimada" string="Fecha estimada"/>
                 </group>
+              
+              <!-- La parte de abajo de la vista se divide en páginas de notebook para mostrar la información separada -->
               <notebook>
+
                 <page string="Tareas" name="page_1">
-                  
+                  <group>
+                    <!-- TODO Modelo de tareas -->
+                  </group>
                 </page>
+
                 <page string="Diseño" name="page_2">
-                  
+                  <group>
+                    <!-- TODO Modelo de diseño -->
+                  </group>
                 </page>
-                <page string="Materiales" name="page_3">
-                  
+
+                <page string="Productos" name="page_3">
+                  <group>
+                    <field name="productos" string="Productos"/>
+                  </group> 
                 </page>
-                <page string="Productos" name="page_4">
-                  
+
+                <page string="Materiales" name="page_4">
+                  <group>
+                    <!--field name="materiales" string="Materiales"/-->
+                  </group>                 
                 </page>
+
                 <page string="Operarios" name="page_5">
-                  
+                  <group>
+                    <!--field name="operarios" string="Operarios"/-->
+                  </group>
                 </page>
+
                 <page string="Vehículo" name="page_6">
-                  
+                  <group>
+                    <!--field name="vehiculo" string="Vehiculo"/-->
+                  </group>
                 </page>
+
                 <page string="Hitos" name="page_7">
-                  
-                </page>                 
+                  <group>
+                    <!-- TODO Modelo de hitos -->
+                  </group>
+                </page> 
+
               </notebook>
+
             </sheet>
+            
           </form>
+
         </field>
     </record>
 
@@ -75,6 +107,7 @@
     </record>
 
 
+  
 
 
 
@@ -117,5 +150,6 @@
 <!--   <menuitem name="Server to list" id="gestion_proyectos" parent="gestion_proyectos.menu_2"
               action="gestion_proyectos.action_server"/>
 -->
+
   </data>
 </odoo>

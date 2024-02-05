@@ -20,11 +20,8 @@ class Project(models.Model):
     fecha_inicio = fields.Date(required=True, default = lambda self: fields.Date.today())   # Siguiendo el ejemplo, función Lambda.
     fecha_estimada = fields.Date(help='Fecha estimada de finalización')
 
-    # Productos:
-    productos = fields.Many2many('product.product', string= 'Producto', required=True, domain="[('type', '=', 'product')]")
-
     # Ingeniero:
-    ingeniero_id = fields.Many2one('hr.employee', string= 'Ingeniero', domain="[('job_title', '=', 'Ingeniero')]")
+    ingeniero_id = fields.Many2one('hr.employee', string= 'Ingeniero', required=True, domain="[('job_title', '=', 'Ingeniero')]")   # Causa error en LOG pero funciona ?
 
     # Fase - Al crear se debería autoseleccionar Planificación y no poder cambiarse.                        #TODO que sea un stage.id
     fase = fields.Selection([('plan', 'Planificación'), ('exec', 'Ejecución'), ('end', 'Finalización')],
@@ -33,12 +30,27 @@ class Project(models.Model):
 
     # TODO subapartados del proyecto (pantallas 1-7)
 
-    # Tareas:
-    # @api.depends('cliente_id','fecha_inicio','ingeniero_id')
-    # def _generador_id(self):
-    #     for record in self:
-    #         record.id = record.cliente_id + record.ingeniero_id + record.fecha_inicio.strftime('%Y-%m-%d')
+    # 1. Tareas - El proyecto tiene una lista de tareas que implementar (suelen ser globales y compartidas entre proyectos)
 
+    # 2. Diseño - El proyecto tiene un diseño específico y único acorde al proyecto (únicas): (se tiene que poder crear sin diseño ya que guardará todo en la BD)
+
+    # 3. Materiales - El proyecto elige unos materiales:
+    #materiales = fields.Many2many('product.product', string= 'Material', required=True, domain="[('categ_id', '=', 'Materiales')]")
+
+    # 4. Productos - El proyecto permite seleccionar productos de tipo 'instalable':
+    productos = fields.Many2many('product.product', string= 'Producto', required=True, domain="[('categ_id', 'child_of', 'Productos Instalables')]")
+
+    # 5. Operarios:
+    #operarios = fields.Many2many('hr.employee', string= 'Operarios', required=True, domain="[('job_title', '=', 'Operario')]")
+
+    # 6. Vehiculo:
+    #vehiculo = fields.Many2many('fleet.vehicle', string = 'Vehiculo', required=True) #TODO Domain - 'Tipoinstalación'
+
+    # 7. Hitos:
+
+
+
+    # - Restricciones y campos computados - #
 
     # Restricción para la fecha de inicio:
     @api.constrains('fecha_inicio')
@@ -59,10 +71,19 @@ class Project(models.Model):
     def _check_product(self):
         for record in self:
             if not record.productos:
-                raise ValidationError('No se puede crear un Proyecto sin Productos. Selecciona al menos uno.')
+                raise ValidationError('No se puede crear un Proyecto sin un sólo producto a instalar.')
 
 
 
+
+
+
+
+
+
+
+
+    # Ejemplos teoría:
     # # Funciones python de restricción:
     # @api.constrains('id')
     # def _check_id(self):
