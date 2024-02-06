@@ -10,7 +10,7 @@
           <field name="id"/>
           <field name="fase"/>
           <field name="cliente_id"/>
-          <field name="ingeniero_id"/>
+          <!--field name="ingeniero_id"/-->
         </tree>
       </field>
     </record>
@@ -46,43 +46,41 @@
 
                 <page string="Tareas" name="page_1">
                   <group>
-                    <!-- TODO Modelo de tareas -->
+                    <!-- Selection de tareas -->
+                    <field name="tareas" string="Tareas del Proyecto"/>
                   </group>
                 </page>
 
                 <page string="Diseño" name="page_2">
                   <group>
-                    <!-- TODO Modelo de diseño -->
+                    <field name="texto_diseño"/>
+                    <!-- <field name="diseño.tipoproyecto"/>
+                    <field name="diseño.observaciones_cliente"/> -->
                   </group>
                 </page>
 
-                <page string="Productos" name="page_3">
+                <page string="Productos y Materiales" name="page_3">
                   <group>
-                    <field name="productos" string="Productos"/>
+                    <field name="products_ids" string="Productos" />
+                    <field name="materials_ids" string="Materiales"/>
                   </group> 
                 </page>
 
-                <page string="Materiales" name="page_4">
+                <page string="Operarios" name="page_4">
                   <group>
-                    <!--field name="materiales" string="Materiales"/-->
-                  </group>                 
-                </page>
-
-                <page string="Operarios" name="page_5">
-                  <group>
-                    <!--field name="operarios" string="Operarios"/-->
+                    <field name="operarios" string="Operarios"/>
                   </group>
                 </page>
 
-                <page string="Vehículo" name="page_6">
+                <page string="Vehículo" name="page_5">
                   <group>
-                    <!--field name="vehiculo" string="Vehiculo"/-->
+                    <field name="vehiculo" string="Vehiculo"/>
                   </group>
                 </page>
 
-                <page string="Hitos" name="page_7">
+                <page string="Hitos" name="page_6">
                   <group>
-                    <!-- TODO Modelo de hitos -->
+                    <field name="hitos" string="Hitos"/>
                   </group>
                 </page> 
 
