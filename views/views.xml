@@ -10,7 +10,7 @@
           <field name="id"/>
           <field name="fase"/>
           <field name="cliente_id"/>
-          <!--field name="ingeniero_id"/-->
+          <field name="ingeniero_id"/>
         </tree>
       </field>
     </record>
@@ -25,7 +25,6 @@
             <header>
               <field name="fase" widget="statusbar" options="{'clickable': '0'}"/>
             </header>
-
             <!-- La parte de arriba de la vista muestra los datos básicos del Proyecto-->
             <sheet>
                 <group>
@@ -33,68 +32,91 @@
                 </group>
                 <group>
                   <field name="cliente_id" string="Cliente"/>
-                  
                   <field name="ingeniero_id" string="Ingeniero"/>
                 </group>
                 <group>
                   <field name="fecha_inicio" string="Fecha inicio"/>
                   <field name="fecha_estimada" string="Fecha estimada"/>
                 </group>
-              
               <!-- La parte de abajo de la vista se divide en páginas de notebook para mostrar la información separada -->
               <notebook>
-
                 <page string="Tareas" name="page_1">
                   <group>
-                    <!-- Selection de tareas -->
-                    <field name="tareas" string="Tareas del Proyecto"/>
+                    <field name="tareas_ids" string="Tareas del Proyecto">
+                      <tree>
+                        <field name="task_name" />
+                        <field name="task_completed" />
+                      </tree>
+                    </field>
                   </group>
                 </page>
-
                 <page string="Diseño" name="page_2">
                   <group>
-                    <field name="texto_diseño"/>
-                    <!-- <field name="diseño.tipoproyecto"/>
-                    <field name="diseño.observaciones_cliente"/> -->
+                    <field name="design_id" string="Diseño"/>
                   </group>
                 </page>
-
                 <page string="Productos y Materiales" name="page_3">
                   <group>
                     <field name="products_ids" string="Productos" />
                     <field name="materials_ids" string="Materiales"/>
                   </group> 
                 </page>
-
                 <page string="Operarios" name="page_4">
                   <group>
-                    <field name="operarios" string="Operarios"/>
+                    <field name="operarios_ids" string="Operarios"/>
                   </group>
                 </page>
-
                 <page string="Vehículo" name="page_5">
                   <group>
-                    <field name="vehiculo" string="Vehiculo"/>
+                    <field name="vehiculos_ids" string="Vehiculo"/>
                   </group>
                 </page>
-
                 <page string="Hitos" name="page_6">
                   <group>
-                    <field name="hitos" string="Hitos"/>
+                    <field name="hitos_ids" string="Hitos">
+                      <tree>
+                        <field name="hito_name" />
+                        <field name="hito_completed" />
+                      </tree>
+                    </field>
                   </group>
                 </page> 
-
               </notebook>
-
             </sheet>
-            
           </form>
-
         </field>
     </record>
 
+    <!-- Esta vista es la de crear diseño -->
+    <record model="ir.ui.view" id="gestion_proyectos.create_design">
+      <field name="name">Crear diseño</field>
+      <field name="model">gestion_proyectos.design</field>
+        <field name="arch" type="xml">
+            <form>
+              <group>
+                <field name="project_type" string="Tipo de proyecto"/>
+              </group>
+              <group>
+                  <field name="client_observations" string="Observaciones del cliente"/>
+                  <field name="engineer_observations" string="Observaciones del ingeniero"/>
+                  <field name="recommended_location" string="Localización de instalación"/>
+              </group>
 
+              <!-- This group should dynamically change depending upon the project type -->
+              <group>
+                <field name="square_meters" string="Metros cuadrados de la instalación"/>
+                <field name="recommended_solars" string="Cantidad de placas recomendadas"/>
+              </group>
+            </form>
+        </field>
+      </record>
 
+    <!-- <record model="ir.ui.view" id="gestion_proyectos.design">
+      <field name="name">Crear proyecto</field>
+      <field name="model">gestion_proyectos.design</field>
+      <field name="view_mode">form</field>
+    </record> -->
+    
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="gestion_proyectos.action_window">
@@ -103,12 +125,6 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="gestion_proyectos.list"/>
     </record>
-
-
-  
-
-
-
 
     <!-- server action to the one above -->
 <!--

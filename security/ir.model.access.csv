@@ -1,2 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_gestion_proyectos_project,gestion_proyectos.project,model_gestion_proyectos_project,base.group_user,1,1,1,1
+access_gestion_proyectos_task,gestion_proyectos.task,model_gestion_proyectos_task,base.group_user,1,1,1,1
+access_gestion_proyectos_hito,gestion_proyectos.hito,model_gestion_proyectos_hito,base.group_user,1,1,1,1
+access_gestion_proyectos_design,gestion_proyectos.design,model_gestion_proyectos_design,base.group_user,1,1,1,1
