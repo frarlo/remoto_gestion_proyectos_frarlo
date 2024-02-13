@@ -28,7 +28,7 @@
             <!-- La parte de arriba de la vista muestra los datos básicos del Proyecto-->
             <sheet>
                 <group>
-                  <field name="id" string="ID Proyecto"/>
+                  <field name="auto_id" string="ID Proyecto"/>
                 </group>
                 <group>
                   <field name="cliente_id" string="Cliente"/>
@@ -52,7 +52,7 @@
                 </page>
                 <page string="Diseño" name="page_2">
                   <group>
-                    <field name="design_id" string="Diseño" widget="many2one_list"/>
+                    <field name="design_id" string="Crear diseño para este proyecto"/>
                   </group>
                 </page>
                 <page string="Productos y Materiales" name="page_3">
@@ -85,6 +85,34 @@
             </sheet>
           </form>
         </field>
+    </record>
+
+
+    <!-- Esta vista es la de crear diseño -->
+    <record model="ir.ui.view" id="gestion_proyectos.create_design">
+      <field name="name">Crear diseño</field>
+      <field name="model">gestion_proyectos.design</field>
+      <field name="arch" type="xml">
+        <form>
+          <group>
+            <field name="project_type" string="Tipo de proyecto"/>
+          </group>
+          <group>
+            <field name="client_observations" string="Observaciones del cliente"/>
+            <field name="engineer_observations" string="Observaciones del ingeniero"/>
+            <field name="recommended_location" string="Localización de instalación"/>
+            </group>
+          <!-- This group should dynamically change depending upon the project type -->
+          <group>
+            <field name="square_meters" string="Metros cuadrados de la instalación"/>
+            <field name="recommended_solars" string="Cantidad de placas recomendadas" attrs="{'invisible': [('project_type', '!=', 'tipo1')]}"  />
+            <field name="recommended_aerotermics" string="Cantidad de aparatos de Aerotermia recomendados" attrs="{'invisible': [('project_type', '!=', 'tipo3')]}" />
+          </group>
+          <group>
+            <field name="quote_amount" string="Presupuesto de instalación estimado"/>
+          </group>
+        </form>
+      </field>
     </record>
 
     <!-- <record model="ir.ui.view" id="gestion_proyectos.design">
