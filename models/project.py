@@ -70,7 +70,7 @@ class Project(models.Model):
     vehiculos_ids = fields.Many2many('fleet.vehicle', string = 'Vehiculo', required=True) #TODO Domain - 'Tipoinstalación'
 
     # 7. Hitos:
-    hitos_ids = fields.Many2many('gestion_proyectos.hito', string = "Hitos")
+    milestones_ids = fields.Many2many('gestion_proyectos.milestone', string = "Hitos")
     
     # - Restricciones y campos computados - #
 
@@ -141,80 +141,6 @@ class Project(models.Model):
     #
 
 # Dos modelos embebidos dentro de Proyecto para crear, gestionar y eliminar tanto tareas como hitos:
-class Task(models.Model):
-    """ Clase que implementa las tareas de un Proyecto"""
-
-    _name = 'gestion_proyectos.task'
-    _description = 'Define tareas dentro de los proyectos existentes en la empresa'
-    _rec_name = 'task_name'
-
-    task_name = fields.Char(string="Nombre de la tarea", required = True)
-    task_active = fields.Boolean(string="Activa", default=True)
-    task_completed = fields.Boolean(string="Completada", default=False)
 
 
-class Hito(models.Model):
-    """ Clase que implementa los hitos de un Proyecto"""
 
-    _name = 'gestion_proyectos.hito'
-    _description = 'Define hitos dentro de los proyectos existentes en la empresa'
-    _rec_name = 'hito_name'
-
-    hito_name = fields.Char(string='Nombre del hito', required = True)
-    hito_active = fields.Boolean(string='Activo', default=True)
-    hito_completed = fields.Boolean(string="Cumplido", default=False)
-
-
-class Design(models.Model):
-    """ Clase que implementa un Proyecto"""
-
-    _name = 'gestion_proyectos.design'
-    #_inherit = 'gestion_proyectos.design' # one2one # Descomentar esta linea causa error
-    _description = 'Define cada uno de los diseños relacionados con los proyectos existentes en la empresa'
-    _rec_name = 'project_id'
-
-    # Cada diseño tiene un project_id:
-    project_id = fields.Many2one('gestion_proyectos.project')
-        
-    # En función del tipo de proyecto pueden aparecer unos campos o no #TODO:
-    project_type = fields.Selection(
-        [('tipo1', 'Solar Fotovoltaica'),
-         ('tipo2', 'Solar Térmica'),
-         ('tipo3', 'Aerotermia'),
-         ('tipo4', 'Climatización'),
-         ('tipo5', 'Minieólica'),
-         ('tipo6', 'Supercargador automoción'),
-         ('tipo7', 'Instalación de baterías')
-          ]
-    )
-
-    # Campos comunes a todos los diseños:
-
-    client_observations = fields.Char()
-
-    engineer_observations = fields.Char()
-
-    quote_amount = fields.Float() # _compute
-
-
-    # Campos dependiendo del tipo de proyecto escogido en Selection:
-
-    recommended_location = fields.Text()
-
-    square_meters = fields.Float()
-
-    recommended_solars = fields.Float(compute='_get_solars', readonly=True) #_compute
-
-    #TODO
-    def _get_solars(self):
-        for record in self:
-            if record.square_meters:
-                record.recommended_solars = record.square_meters // 10
-            else:
-                record.recommended_solars = 0
-
-
-    # TODO - Restricción SQL:
-    _sql_constraints = [
-        ('design_uniq', 'unique(design)', 'No puede haber otro proyecto con este diseño')
-    ]

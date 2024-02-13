@@ -1,0 +1,13 @@
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+
+class Task(models.Model):
+    """ Clase que implementa las tareas de un Proyecto"""
+
+    _name = 'gestion_proyectos.task'
+    _description = 'Define tareas dentro de los proyectos existentes en la empresa'
+    _rec_name = 'task_name'
+
+    task_name = fields.Char(string="Nombre de la tarea", required = True)
+    task_active = fields.Boolean(string="Activa", default=True)
+    task_completed = fields.Boolean(string="Completada", default=False)

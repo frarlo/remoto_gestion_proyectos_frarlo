@@ -52,7 +52,7 @@
                 </page>
                 <page string="Diseño" name="page_2">
                   <group>
-                    <field name="design_id" string="Diseño"/>
+                    <field name="design_id" string="Diseño" widget="many2one_list"/>
                   </group>
                 </page>
                 <page string="Productos y Materiales" name="page_3">
@@ -73,10 +73,10 @@
                 </page>
                 <page string="Hitos" name="page_6">
                   <group>
-                    <field name="hitos_ids" string="Hitos">
+                    <field name="milestones_ids" string="Hitos">
                       <tree>
-                        <field name="hito_name" />
-                        <field name="hito_completed" />
+                        <field name="milestone_name" />
+                        <field name="milestone_completed" />
                       </tree>
                     </field>
                   </group>
@@ -86,30 +86,6 @@
           </form>
         </field>
     </record>
-
-    <!-- Esta vista es la de crear diseño -->
-    <record model="ir.ui.view" id="gestion_proyectos.create_design">
-      <field name="name">Crear diseño</field>
-      <field name="model">gestion_proyectos.design</field>
-        <field name="arch" type="xml">
-            <form>
-              <group>
-                <field name="project_type" string="Tipo de proyecto"/>
-              </group>
-              <group>
-                  <field name="client_observations" string="Observaciones del cliente"/>
-                  <field name="engineer_observations" string="Observaciones del ingeniero"/>
-                  <field name="recommended_location" string="Localización de instalación"/>
-              </group>
-
-              <!-- This group should dynamically change depending upon the project type -->
-              <group>
-                <field name="square_meters" string="Metros cuadrados de la instalación"/>
-                <field name="recommended_solars" string="Cantidad de placas recomendadas"/>
-              </group>
-            </form>
-        </field>
-      </record>
 
     <!-- <record model="ir.ui.view" id="gestion_proyectos.design">
       <field name="name">Crear proyecto</field>
