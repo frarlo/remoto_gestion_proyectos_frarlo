@@ -5,9 +5,10 @@ class Design(models.Model):
     """ Clase que implementa un Diseño"""
 
     _name = 'gestion_proyectos.design'
-    #_inherit = 'gestion_proyectos.design' # one2one # Descomentar esta linea causa error
     _description = 'Define cada uno de los diseños relacionados con los proyectos existentes en la empresa'
-    _rec_name = 'id'
+    _rec_name = 'name'
+
+    name = fields.Char()
 
     # Cada diseño tiene un project_id:
     project_id = fields.Many2one('gestion_proyectos.project')

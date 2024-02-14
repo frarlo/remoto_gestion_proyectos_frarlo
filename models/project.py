@@ -12,6 +12,7 @@ class Project(models.Model):
     # Código del proyecto alfanumérico
     auto_id = fields.Char(compute='_generate_id')
 
+    #TODO mover abajo
     @api.depends('cliente_id','ingeniero_id','fecha_inicio')
     def _generate_id(self):
         for record in self:
@@ -44,17 +45,28 @@ class Project(models.Model):
     # Pagina 2. Diseño del Proyecto - Cada proyecto tiene un diseño específico. Necesita un compute y un inverse para hacer get del diseño y settearlo
     # Debe hacerse con un one2one manual - ¿Debe crearse el proyecto sin diseño? TODO
 
-    design_id = fields.Many2one('gestion_proyectos.design', compute='_get_project_design', inverse='_set_project_design', store=True)
-    
+
+    design_id = fields.Many2one('gestion_proyectos.design', compute='_compute_project_design', inverse='_inverse_project_design')
+    designs_ids = fields.One2many('gestion_proyectos.design', 'project_id')
+
+    design_project_type = fields.Selection(string="Tipo de Proyecto", related='design_id.project_type')
+    design_client_observations = fields.Text(string="Observaciones del Cliente", related='design_id.client_observations')
+
     # # # Siguiendo el ejemplo de castilloinformatica.es (las funciones api.multi y api.one ya no funcionan / buscar alternativa)
 
-    def _get_project_design(self):
+    #TODO d y p A RECORD por favor:
+    @api.depends('designs_ids')
+    def _compute_project_design(self):
         for d in self:
-            d.design_id = self.env['gestion_proyectos.design'].search([('gestion_proyectos.id', '=', d.id)]).id
+            if len(d.designs_ids) > 0:
+                d.design_id = d.designs_ids[0]
 
-    def _set_project_design(self):
-        p = self.design_id.id
-        self.env['gestion_proyectos.design'].search([('id','=',p)]).write({'project':self.id})
+    def _inverse_project_design(self):
+        for p in self:
+            if len(p.designs_ids) > 0:
+                design = p.env['gestion_proyectos.design'].browse(p.designs_ids[0])
+                design.project_id = False
+            p.design_id.project_id = p
     
     # Pagina 2. Campos del diseño. Si lo hacemos de manera predeterminada sale una emergente. Queremos mostrarlos de forma directa en la página,
     # para ello hemos de acceder a los valores de design_id y hacer un 'related' y funciones con @api.onchange('campo_a_mostrar')
@@ -124,13 +136,24 @@ class Project(models.Model):
             if not record.vehiculos_ids:
                 raise ValidationError('No se puede crear un Proyecto sin vehículos.')
 
+    # Que devuelva una acción de edición sobre el diseño en una nueva ventana:
+    def edit_design(self):
+        return {'type':'ir.actions.act_window',
+                'res_model':'gestion_proyectos.design',
+                'view_mode':'form',
+                'target':'new',
+                'res_id':self.design_id.id} 
+        
+    # TODO - 1. Retornar una vista de creación de diseño:
+    #        2. 
+    #
+    def create_design(self):
+        pass
+
 
     # TODO: Función para cambiar el estado del proyecto de "Planificación" a "En ejecución" si se cumplen los requisitos (todo asignado y plan diseñado)
 
-
-
-
-
+    # TODO: Mover todas las funciones computadas aquí
 
 
     # Ejemplos teoría:
@@ -147,8 +170,3 @@ class Project(models.Model):
     #       ('unique_id', 'unique(id)', 'El código debe ser único')    
     #    )
     #
-
-# Dos modelos embebidos dentro de Proyecto para crear, gestionar y eliminar tanto tareas como hitos:
-
-
-

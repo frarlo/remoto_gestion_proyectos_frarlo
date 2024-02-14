@@ -52,7 +52,13 @@
                 </page>
                 <page string="Diseño" name="page_2">
                   <group>
-                    <field name="design_id" string="Crear diseño para este proyecto"/>
+                    <Button type="object" class='oe_highlight' name="edit_design" string="Editar diseño" />
+                    <Button type="object" class='oe_highlight' name="create_design" string="Crear diseño" attrs="{'invisible':[('design_id','!=','')]}"/>
+                  </group>
+                  <group>
+                    <field name="design_project_type" />
+                    <field name="design_client_observations" />
+                    <field name="design_id" string="Diseño asociado al proyecto" />
                   </group>
                 </page>
                 <page string="Productos y Materiales" name="page_3">
@@ -95,6 +101,7 @@
       <field name="arch" type="xml">
         <form>
           <group>
+            <field name="name" />
             <field name="project_type" string="Tipo de proyecto"/>
           </group>
           <group>
