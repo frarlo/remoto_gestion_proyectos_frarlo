@@ -16,19 +16,37 @@
       <t t-call="web.html_container">
 
         <!-- Esqueleto básico para los informes / TODO: construir un buen HTML/CSS -->
-        <t t-foreach="docs" t-as="o">
+        <t t-foreach="docs" t-as="project">
            <t t-call="web.external_layout">
             <div class="page">
-                <h1>Nombre del Proyecto</h1>
-                <p><t t-esc= "o.auto_id"/></p>
-                <h1>Cliente:</h1>
-                <p><t t-esc= "o.cliente_id.name"/></p>
-                <h1>Productos contratados</h1>
-                <p><t t-esc= "o.products_ids.name"/></p>
-                <h1>Operarios encargados</h1>
-                <p><t t-esc= "o.operarios_ids.name"/></p>
-                <h1>Vehículos utilizados</h1>
-                <p><t t-esc= "o.vehiculos_ids.name"/></p>
+                <div class="datos">
+                  <h3>Nombre del Proyecto</h3>
+                  <p><t t-esc= "project.auto_id"/></p>
+                  <h3>Cliente:</h3>
+                  <p><t t-esc= "project.cliente_id.name"/></p>
+                  <h3>Ingeniero encargado:</h3>
+                  <p><t t-esc= "project.cliente_id.name"/></p>
+                </div>
+                <div class="productos_materiales">
+                  <h3>Productos contratados</h3>
+                  <t t-foreach = "project.products_ids" t-as="product">
+                  <p><t t-esc= "product.name"/></p>
+                  </t>
+                  <h3>Materiales utilizados</h3>
+                  <t t-foreach = "project.materials_ids" t-as="material">
+                  <p><t t-esc= "material.name"/></p>
+                  </t>
+                </div>
+               <div class="otros">
+                <h3>Operarios encargados</h3>
+                <t t-foreach = "project.operarios_ids" t-as="operario">
+                  <p><t t-esc= "operario.name"/></p>
+                </t>
+                <h3>Vehículos utilizados</h3>
+                <t t-foreach = "project.vehiculos_ids" t-as="vehiculo">
+                  <p><t t-esc= "vehiculo.name"/></p>
+                </t>
+               </div>
             </div>
            </t>
         </t> 

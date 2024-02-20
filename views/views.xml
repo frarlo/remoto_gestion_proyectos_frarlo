@@ -139,21 +139,13 @@
         <field name="view_id" ref="gestion_proyectos.list"/>
     </record>
 
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="gestion_proyectos.action_server">
-      <field name="name">gestion_proyectos server</field>
-      <field name="model_id" ref="model_gestion_proyectos_gestion_proyectos"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
+
+    <record model="ir.actions.act_window" id="gestion_proyectos.action_window2">
+      <field name="name">Crear proyecto</field>
+      <field name="res_model">gestion_proyectos.project</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="gestion_proyectos.create_project"/>
+  </record>
 
     <!-- Top menu item -->
 
@@ -161,22 +153,15 @@
 
     <!-- menu categories -->
 
-    <menuitem name="Proyecto" id="gestion_proyectos.menu_1" parent="gestion_proyectos.menu_root"/>
+    <menuitem name="Gestionar" id="gestion_proyectos.menu_1" parent="gestion_proyectos.menu_root"/>
 <!--<menuitem name="Menu 2" id="gestion_proyectos.menu_2" parent="gestion_proyectos.menu_root"/>
 -->
     <!-- actions -->
 
-    <menuitem name="Crear" id="gestion_proyectos.menu_1_list" parent="gestion_proyectos.menu_1"
+    <menuitem name="Ver proyectos existentes" id="gestion_proyectos.menu_1_list" parent="gestion_proyectos.menu_1"
               action="gestion_proyectos.action_window"/>
-    <menuitem name="Editar" id="gestion_proyectos.menu_2_list" parent="gestion_proyectos.menu_1"
-              action="gestion_proyectos.action_window"/>
-    <menuitem name="Comprobar" id="gestion_proyectos.menu_3_list" parent="gestion_proyectos.menu_1"
-              action="gestion_proyectos.action_window"/>
-    <menuitem name="Eliminar" id="gestion_proyectos.menu_4_list" parent="gestion_proyectos.menu_1"
-              action="gestion_proyectos.action_window"/>
-<!--   <menuitem name="Server to list" id="gestion_proyectos" parent="gestion_proyectos.menu_2"
-              action="gestion_proyectos.action_server"/>
--->
+    <menuitem name="Crear un nuevo Proyecto" id="gestion_proyectos.menu_2_list" parent="gestion_proyectos.menu_1"
+              action="gestion_proyectos.action_window2"/>
 
   </data>
 </odoo>
