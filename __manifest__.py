@@ -27,9 +27,12 @@
 
     # always loaded
     'data': [
+        # TODO - change security access with roles
         'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
+        # reports
+        'reports/project_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -1,0 +1,38 @@
+<odoo>
+    <!-- Siguiendo el ejemplo visto en la TC -->
+    <record id="project_pdf_report" model="ir.actions.report">
+      <field name="name">Resumen del proyecto</field>
+      <field name="model">gestion_proyectos.project</field>
+      <field name="report_type">qweb-pdf</field>
+      <field name="report_name">gestion_proyectos.report_project</field>
+      <field name="binding_model_id" ref="model_gestion_proyectos_project"/>
+      <field name="binding_type">report</field>
+      <field name="binding_view_types">list,form</field>
+      <field name="print_report_name">'Resumen del Proyecto- %s' % (object.auto_id)</field>
+    </record>
+   
+    <!-- El template al que hacemos referencia -->
+    <template id="gestion_proyectos.report_project">
+      <t t-call="web.html_container">
+
+        <!-- Esqueleto básico para los informes / TODO: construir un buen HTML/CSS -->
+        <t t-foreach="docs" t-as="o">
+           <t t-call="web.external_layout">
+            <div class="page">
+                <h1>Nombre del Proyecto</h1>
+                <p><t t-esc= "o.auto_id"/></p>
+                <h1>Cliente:</h1>
+                <p><t t-esc= "o.cliente_id.name"/></p>
+                <h1>Productos contratados</h1>
+                <p><t t-esc= "o.products_ids.name"/></p>
+                <h1>Operarios encargados</h1>
+                <p><t t-esc= "o.operarios_ids.name"/></p>
+                <h1>Vehículos utilizados</h1>
+                <p><t t-esc= "o.vehiculos_ids.name"/></p>
+            </div>
+           </t>
+        </t> 
+      </t>
+    </template>
+  
+</odoo>
