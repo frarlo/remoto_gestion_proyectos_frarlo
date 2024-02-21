@@ -38,7 +38,6 @@ class Project(models.Model):
     design_id = fields.Many2one('gestion_proyectos.design', compute='_compute_project_design', inverse='_inverse_project_design')
     designs_ids = fields.One2many('gestion_proyectos.design', 'project_id')
 
-    #TODO d y p A RECORD por favor:
     @api.depends('designs_ids')
     def _compute_project_design(self):
         for record in self:
@@ -74,9 +73,6 @@ class Project(models.Model):
 
     # Página 6 - Milestones (hitos). Los proyectos tienen unos hitos asociados.
     milestones_ids = fields.Many2many('gestion_proyectos.milestone', string = "Hitos")
-
-
-
 
 
     ### - Restricciones y campos computados - ###
@@ -154,12 +150,12 @@ class Project(models.Model):
         self.milestones_ids = available_milestones
 
     # Funciones que marcan automáticamente las tareas del Proyecto - TODO - Actualiza el valor de tareas en todos los proyectos - 
-    # @api.onchange('tasks_ids','products_ids','materials_ids')   # Productos y materiales
-    # def _check_products_materials_task(self):
-    #     if self.products_ids and self.materials_ids:
-    #         for task in self.tasks_ids:
-    #             if task.task_name == 'Asignados Productos y Materiales':
-    #                 task.write({'task_completed':True})
+    @api.onchange('tasks_ids','products_ids','materials_ids')   # Productos y materiales
+    def _check_products_materials_task(self):
+        if self.products_ids and self.materials_ids:
+            for task in self.tasks_ids:
+                if task.task_name == 'Asignados Productos y Materiales':
+                    task.write({'task_completed':True})
 
     # @api.onchange('tasks_ids','operarios_ids')
     # def _check_operarios_task(self):
@@ -207,3 +203,5 @@ class Project(models.Model):
     #   _sql_constraints = (
     #       ('unique_id', 'unique(id)', 'El código debe ser único')    
     #    )
+        
+        

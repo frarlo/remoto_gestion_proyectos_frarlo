@@ -53,8 +53,8 @@
                 <page string="Diseño" name="page_2">
                   <group string="Diseño de la instalación del Proyecto">
                     <Button type="object" icon="fa-gavel" class='oe_highlight' name="edit_design" string="Editar diseño"  />
-                    <Button type="object" icon="fa-gavel" class='oe_highlight' name="create_design" string="Crear diseño"  />
-                    <!-- attrs="{'invisible':[('design_id','!=','')]}" -->
+                    <Button type="object" icon="fa-gavel" class='oe_highlight' name="create_design" string="Crear diseño" attrs="{'invisible':[('design_id','!=', False)]}" />
+                    <!-- -->
                   </group>
                   <group>
                     <field name="design_id" invisible="1" />
@@ -127,7 +127,7 @@
             <field name="recommended_location" string="Localización de instalación"/>
             </group>
           <!-- Este gropo puede tener campos específicos según el tipo de Proyecto elegido -->
-          <group string="Diseño específicos"> 
+          <group string="Diseño específico"> 
             <field name="square_meters" string="Metros cuadrados de la instalación"/>
             <field name="recommended_solars" string="Cantidad de placas recomendadas" attrs="{'invisible': [('project_type', '!=', 'tipo1')]}"  />
             <field name="recommended_aerotermics" string="Cantidad de aparatos de Aerotermia recomendados" attrs="{'invisible': [('project_type', '!=', 'tipo3')]}" />

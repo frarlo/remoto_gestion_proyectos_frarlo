@@ -11,3 +11,6 @@ class Task(models.Model):
     task_name = fields.Char(string="Nombre de la tarea", required = True)
     task_active = fields.Boolean(string="Activa", default=True)
     task_completed = fields.Boolean(string="Completada", default=False)
+
+    # TODO asociar tareas con proyectos many2many - esto es un marrón por parte de Alfredo! 
+    # Pensar esto 

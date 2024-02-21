@@ -20,32 +20,36 @@
            <t t-call="web.external_layout">
             <div class="page">
                 <div class="datos">
-                  <h3>Nombre del Proyecto</h3>
+                  <h4>Nombre del Proyecto</h4>
                   <p><t t-esc= "project.auto_id"/></p>
-                  <h3>Cliente:</h3>
+                  <h4>Cliente:</h4>
                   <p><t t-esc= "project.cliente_id.name"/></p>
-                  <h3>Ingeniero encargado:</h3>
-                  <p><t t-esc= "project.cliente_id.name"/></p>
+                  <h4>Ingeniero encargado:</h4>
+                  <p><t t-esc= "project.ingeniero_id.name"/></p>
                 </div>
                 <div class="productos_materiales">
-                  <h3>Productos contratados</h3>
+                  <h4>Productos contratados</h4>
                   <t t-foreach = "project.products_ids" t-as="product">
                   <p><t t-esc= "product.name"/></p>
                   </t>
-                  <h3>Materiales utilizados</h3>
+                  <h4>Materiales utilizados</h4>
                   <t t-foreach = "project.materials_ids" t-as="material">
                   <p><t t-esc= "material.name"/></p>
                   </t>
                 </div>
                <div class="otros">
-                <h3>Operarios encargados</h3>
+                <h4>Operarios encargados</h4>
                 <t t-foreach = "project.operarios_ids" t-as="operario">
                   <p><t t-esc= "operario.name"/></p>
                 </t>
-                <h3>Vehículos utilizados</h3>
+                <h4>Vehículos utilizados</h4>
                 <t t-foreach = "project.vehiculos_ids" t-as="vehiculo">
                   <p><t t-esc= "vehiculo.name"/></p>
                 </t>
+               </div>
+               <div class="diseño">
+                <h4>Tipo de proyecto realizado</h4>
+                <p><t t-esc= "project.design_id.project_type"/></p>
                </div>
             </div>
            </t>
