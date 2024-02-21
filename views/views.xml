@@ -7,10 +7,10 @@
       <field name="model">gestion_proyectos.project</field>
       <field name="arch" type="xml">
         <tree>
-          <field name="id"/>
-          <field name="fase"/>
-          <field name="cliente_id"/>
-          <field name="ingeniero_id"/>
+          <field name="auto_id" string="Código del Proyecto" />
+          <field name="fase" string="Fase del Proyecto" />
+          <field name="cliente_id" string="Cliente"/>
+          <field name="ingeniero_id" string="Ingeniero encargado" />
         </tree>
       </field>
     </record>
@@ -23,13 +23,12 @@
           <form>
             <!-- El header nos indica la fase actual del Proyecto-->
             <header>
-              <!-- Botón de generar informe aquí condiciones: guardado/existente fase:independiente -->
               <field name="fase" widget="statusbar" options="{'clickable': '0'}"/>
             </header>
             <!-- La parte de arriba de la vista muestra los datos básicos del Proyecto-->
             <sheet>
-                <group>
-                  <field name="auto_id" string="ID Proyecto"/>
+                <group string="Información básica del Proyecto">
+                  <field name="auto_id" string="ID Proyecto" style="font-size: 16px; font-weight: bold; " />
                 </group>
                 <group>
                   <field name="cliente_id" string="Cliente"/>
@@ -42,47 +41,67 @@
               <!-- La parte de abajo de la vista se divide en páginas de notebook para mostrar la información separada -->
               <notebook>
                 <page string="Tareas" name="page_1">
-                  <group>
-                    <field name="tareas_ids" string="Tareas del Proyecto">
+                  <group string="Listado de tareas del Proyecto">
+                    <field name="tasks_ids" colspan="2" >
                       <tree>
-                        <field name="task_name" />
-                        <field name="task_completed" />
+                        <field name="task_name" string="Nombre de la tarea" />
+                        <field name="task_completed" string="Completado" />
                       </tree>
                     </field>
                   </group>
                 </page>
                 <page string="Diseño" name="page_2">
-                  <group>
-                    <Button type="object" class='oe_highlight' name="edit_design" string="Editar diseño" />
-                    <Button type="object" class='oe_highlight' name="create_design" string="Crear diseño" />
+                  <group string="Diseño de la instalación del Proyecto">
+                    <Button type="object" icon="fa-gavel" class='oe_highlight' name="edit_design" string="Editar diseño"  />
+                    <Button type="object" icon="fa-gavel" class='oe_highlight' name="create_design" string="Crear diseño"  />
                     <!-- attrs="{'invisible':[('design_id','!=','')]}" -->
                   </group>
                   <group>
-                    <field name="design_id" string="Diseño asociado al proyecto" />
+                    <field name="design_id" invisible="1" />
                   </group>
                 </page>
                 <page string="Productos y Materiales" name="page_3">
-                  <group>
-                    <field name="products_ids" string="Productos" />
-                    <field name="materials_ids" string="Materiales"/>
+                  <group string="Productos y Materiales a utilizar en el Proyecto">
+                    <field name="products_ids" string="Productos" colspan="2">
+                      <tree>
+                        <field name="name" string="Producto" />
+                        <!-- <field name="qty_available" string="Existencias" /> -->
+                      </tree>
+                    </field>
+                    <field name="materials_ids" string="Materiales" colspan="2">
+                      <tree>
+                        <field name="name" string="Material" />
+                        <!-- <field name="qty_available" string="Existencias" /> -->
+                      </tree>
+                    </field>
                   </group> 
                 </page>
                 <page string="Operarios" name="page_4">
-                  <group>
-                    <field name="operarios_ids" string="Operarios"/>
+                  <group string="Operarios que van a trabajar en el Proyecto">
+                    <field name="operarios_ids" string="Operarios" colspan="2">
+                      <tree>
+                        <field name="name" string="Nombre del operario" />
+                        <field name="work_phone" string="Teléfono de contacto" />
+                      </tree>
+                    </field>
                   </group>
                 </page>
                 <page string="Vehículo" name="page_5">
-                  <group>
-                    <field name="vehiculos_ids" string="Vehiculo"/>
+                  <group string="Vehículos que se van a utilizar en el Proyecto">
+                    <field name="vehiculos_ids" string="Vehiculo" colspan="2">
+                      <tree>
+                        <field name="model_id" string="Modelo" />
+                        <field name="license_plate" string="Matrícula" />
+                      </tree>
+                    </field>
                   </group>
                 </page>
                 <page string="Hitos" name="page_6">
-                  <group>
-                    <field name="milestones_ids" string="Hitos">
+                  <group string="Hitos a definir para el Proyecto">
+                    <field name="milestones_ids" string="Hitos" colspan="2"> 
                       <tree>
-                        <field name="milestone_name" />
-                        <field name="milestone_completed" />
+                        <field name="milestone_name" string="Nombre del hito"/>
+                        <field name="milestone_completed" string="Completado" />
                       </tree>
                     </field>
                   </group>
@@ -100,24 +119,22 @@
       <field name="model">gestion_proyectos.design</field>
       <field name="arch" type="xml">
         <form>
-          <group>
-            <field name="name" />
+          <!-- Este gropo englobla los datos generales que comparten todos los diseños -->
+          <group string="Datos generales">
             <field name="project_type" string="Tipo de proyecto"/>
-          </group>
-          <group>
             <field name="client_observations" string="Observaciones del cliente"/>
             <field name="engineer_observations" string="Observaciones del ingeniero"/>
             <field name="recommended_location" string="Localización de instalación"/>
             </group>
-          <!-- This group should dynamically change depending upon the project type -->
-          <group>
+          <!-- Este gropo puede tener campos específicos según el tipo de Proyecto elegido -->
+          <group string="Diseño específicos"> 
             <field name="square_meters" string="Metros cuadrados de la instalación"/>
             <field name="recommended_solars" string="Cantidad de placas recomendadas" attrs="{'invisible': [('project_type', '!=', 'tipo1')]}"  />
             <field name="recommended_aerotermics" string="Cantidad de aparatos de Aerotermia recomendados" attrs="{'invisible': [('project_type', '!=', 'tipo3')]}" />
             <field name="wind_levels" string="Velocidad media del viento en terrado del cliente" attrs="{'invisible': [('project_type', '!=', 'tipo5')]}" />
             <field name="recommended_eolic" string="Lugar de instalación recomendado" attrs="{'invisible': [('project_type', '!=', 'tipo5')]}" />
           </group>
-          <group>
+          <group string="Presupuesto">
             <field name="quote_amount" string="Presupuesto de instalación estimado"/>
           </group>
         </form>

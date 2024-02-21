@@ -10,4 +10,4 @@ class Task(models.Model):
 
     task_name = fields.Char(string="Nombre de la tarea", required = True)
     task_active = fields.Boolean(string="Activa", default=True)
-    task_completed = fields.Boolean(string="Completada", default=False, readonly=True)
+    task_completed = fields.Boolean(string="Completada", default=False)

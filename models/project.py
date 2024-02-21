@@ -9,7 +9,7 @@ class Project(models.Model):
     _description = 'Define cada uno de los proyectos existentes en la empresa'
     _rec_name = 'auto_id'
 
-    # Código del proyecto alfanumérico
+    # Código del proyecto alfanumérico computado para mostrarse por pantalla:
     auto_id = fields.Char(compute='_generate_id')
 
     # Cliente:
@@ -27,10 +27,9 @@ class Project(models.Model):
                             default= 'plan',    # Fase predeterminada de inicio
                             readonly= True)     # El usuario no puede cambiarla manualmente
 
-    # Pagina 1. Tareas - El proyecto tiene una lista de tareas que implementar (TODO: Añadir automáticamente, actualizar sus valores
-    # conforme vayamos realizando tareas de planificación de forma automática)
 
-    tareas_ids = fields.Many2many('gestion_proyectos.task', string="Tareas")
+    # Pagina 1. Tareas - El proyecto tiene una lista de tareas que implementar
+    tasks_ids = fields.Many2many('gestion_proyectos.task', string="Tareas")
 
     # Pagina 2. Diseño del Proyecto - Cada proyecto tiene un diseño específico. Necesita un compute y un inverse para hacer get del diseño y settearlo
     # Debe hacerse con un one2one manual - ¿Debe crearse el proyecto sin diseño? TODO
@@ -80,7 +79,7 @@ class Project(models.Model):
 
 
 
-    # - Restricciones y campos computados - #
+    ### - Restricciones y campos computados - ###
 
     # Restricción para la fecha de inicio:
     @api.constrains('fecha_inicio')
@@ -97,10 +96,10 @@ class Project(models.Model):
                 raise ValidationError("La fecha estimada de final no puede ser anterior a la fecha de inicio.")
  
     # Restricción para que no se pueda crear un Proyecto sin los siguientes campos definidos:
-    @api.constrains('tareas_ids','products_ids','materials_ids','operarios_ids','vehiculos_ids','milestones_ids')
+    @api.constrains('tasks_ids','products_ids','materials_ids','operarios_ids','vehiculos_ids','milestones_ids')
     def _check_products(self):
         for record in self:
-            if not record.tareas_ids or not record.products_ids or not record.materials_ids or not record.operarios_ids or not record.vehiculos_ids or not record.milestones_ids:
+            if not record.tasks_ids or not record.products_ids or not record.materials_ids or not record.operarios_ids or not record.vehiculos_ids or not record.milestones_ids:
                 raise ValidationError('Faltan datos básicos en el Proyecto (Productos, Materiales, Operarios...)')
     
     # Función que genera un sencillo nombre de proyecto con el cliente y la fecha:
@@ -108,7 +107,7 @@ class Project(models.Model):
     def _generate_id(self):
         for record in self:
             if record.cliente_id and record.fecha_inicio:
-                auto_id = f"PROYECTO {record.cliente_id.name} / {record.fecha_inicio.strftime('%m%d')}"
+                auto_id = f"PROYECTO {record.cliente_id.name}/{record.fecha_inicio.strftime('%m%d')}"
                 record.auto_id = auto_id.upper()
             else:
                 record.auto_id = ""
@@ -132,13 +131,67 @@ class Project(models.Model):
 
 
     # TODO: Función para cambiar el estado del proyecto de "Planificación" a "En ejecución" si se cumplen los requisitos (todo asignado y plan diseñado)
-    @api.depends('fase','tareas_ids','products_ids','materials_ids','operarios_ids','vehiculos_ids','milestones_ids','design_id')
+    @api.onchange('design_id')
     def _change_project_stage(self):
         for record in self:
-            if record.tareas_ids and record.products_ids and record.materials_ids and record.operarios_ids and record.vehiculos_ids and record.milestones_ids and record.design_id:
+            if record.design_id != '':
+                pass
+            else:
                 record.fase = 'exec'
-            
-            
+    
+    # Función que carga todas las tareas automáticamente al iniciar un Proyecto:
+    @api.onchange('tasks_ids')
+    def _load_available_tasks(self):
+        # Obtenemos las tareas disponibles usando environment (no establecemos dominio de búsqueda ya que queremos añadir todas)
+        available_tasks = self.env['gestion_proyectos.task'].search([])
+        # Asociamos todas las tareas de forma predefinida:
+        self.tasks_ids = available_tasks
+    
+    # Función que carga todos los hitos automáticamente al iniciar un Proyecto (funciona de forma similar a las tareas):
+    @api.onchange('milestones_ids')
+    def _load_available_milestones(self):
+        available_milestones = self.env['gestion_proyectos.milestone'].search([])
+        self.milestones_ids = available_milestones
+
+    # Funciones que marcan automáticamente las tareas del Proyecto - TODO - Actualiza el valor de tareas en todos los proyectos - 
+    # @api.onchange('tasks_ids','products_ids','materials_ids')   # Productos y materiales
+    # def _check_products_materials_task(self):
+    #     if self.products_ids and self.materials_ids:
+    #         for task in self.tasks_ids:
+    #             if task.task_name == 'Asignados Productos y Materiales':
+    #                 task.write({'task_completed':True})
+
+    # @api.onchange('tasks_ids','operarios_ids')
+    # def _check_operarios_task(self):
+    #     for record in self:
+    #         if record.operarios_ids:
+    #             for task in record.tasks_ids:
+    #                 if task.task_name == 'Asignados Operarios':
+    #                     task.write({'task_completed':True})
+    
+    # @api.onchange('tasks_ids','vehiculos_ids')
+    # def _check_vehicles_task(self):
+    #     for record in self:
+    #         if record.vehiculos_ids:
+    #             for task in record.tasks_ids:
+    #                 if task.task_name == 'Asignado Vehículo':
+    #                     task.write({'task_completed':True})
+
+    # @api.onchange('tasks_ids','milestones_ids')
+    # def _check_milestones_task(self):
+    #     for record in self:
+    #         if record.milestones_ids:
+    #             for task in record.tasks_ids:
+    #                 if task.task_name == 'Asignados Hitos':
+    #                     task.write({'task_completed':True})
+
+    # @api.onchange('tasks_ids','design_id')
+    # def _check_design_task(self):
+    #     for record in self:
+    #         if record.design_id:
+    #             for task in record.tasks_ids:
+    #                 if task.task_name == 'Realizado Plan de Diseño':
+    #                     task.write({'task_completed':True})
 
 
     # Ejemplos teoría:
@@ -154,4 +207,3 @@ class Project(models.Model):
     #   _sql_constraints = (
     #       ('unique_id', 'unique(id)', 'El código debe ser único')    
     #    )
-    

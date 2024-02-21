@@ -21,7 +21,7 @@ class Design(models.Model):
          ('tipo4', 'Climatización'),
          ('tipo5', 'Minieólica'),
          ('tipo6', 'Supercargador automoción')
-          ]
+          ], required=True
     )
 
     # Campos comunes a todos los diseños (Observaciones de cliente e ingeniero, localización de la instalación recomendada y presupuesto (de instalación))
@@ -53,7 +53,6 @@ class Design(models.Model):
     # Cargador automoción:
     
 
-    
     
     # Calcula el número de placas solares (térmicas y fotovoltaicas) sobre los metros cuadrados:
     @api.depends('square_meters')
@@ -117,7 +116,7 @@ class Design(models.Model):
                 record.quote_amount = 0
 
     # TODO - El diseño puede ser editado en "cualquier" momento por lo tanto no deben haber restricciones en su creación más allá de seleccionar el tipo:
-    
+
 
     # TODO - Restricción SQL:
     # _sql_constraints = [
