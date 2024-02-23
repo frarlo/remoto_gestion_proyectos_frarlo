@@ -137,7 +137,7 @@ class Project(models.Model):
             if len(record.designs_ids) > 0:
                 record.design_id = record.designs_ids[0]
                 if record.design_id:
-                    record.fase = 'exec'
+                    record.fase = 'exec'    # Si el proyecto tiene un design_id quiere decir que tiene un diseño y puede pasar a fase de ejecución
 
     # Función inverse para proporcionar al proyecto el diseño específico:
     def _inverse_project_design(self):

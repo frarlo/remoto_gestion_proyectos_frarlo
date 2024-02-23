@@ -11,6 +11,7 @@
           <field name="fase" string="Fase del Proyecto" />
           <field name="cliente_id" string="Cliente"/>
           <field name="ingeniero_id" string="Ingeniero encargado" />
+          <field name="fecha_inicio" string="Fecha de inicio" />
         </tree>
       </field>
     </record>
