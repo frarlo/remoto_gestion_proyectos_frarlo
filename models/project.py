@@ -17,7 +17,7 @@ class Project(models.Model):
 
     # Fechas de inicio y de final (estimada):
     fecha_inicio = fields.Date(required=True, default = lambda self: fields.Date.today())   # Siguiendo el ejemplo, función Lambda.
-    fecha_estimada = fields.Date(help='Fecha estimada de finalización')
+    fecha_estimada = fields.Date(help='Fecha estimada de finalización' )
 
     # Ingeniero:
     ingeniero_id = fields.Many2one('hr.employee', string= 'Ingeniero', required=True, domain="[('job_title', '=', 'Ingeniero')]")  
@@ -27,35 +27,14 @@ class Project(models.Model):
                             default= 'plan',    # Fase predeterminada de inicio
                             readonly= True)     # El usuario no puede cambiarla manualmente
 
-
-    # Pagina 1. Tareas - El proyecto tiene una lista de tareas que implementar
+    # Pagina 1. Tareas - El proyecto tiene una lista de tareas que implementar. # TODO: Gestionar las tablas y sus estados
     tasks_ids = fields.Many2many('gestion_proyectos.task', string="Tareas")
 
     # Pagina 2. Diseño del Proyecto - Cada proyecto tiene un diseño específico. Necesita un compute y un inverse para hacer get del diseño y settearlo
-    # Debe hacerse con un one2one manual - ¿Debe crearse el proyecto sin diseño? TODO
-
-
     design_id = fields.Many2one('gestion_proyectos.design', compute='_compute_project_design', inverse='_inverse_project_design')
     designs_ids = fields.One2many('gestion_proyectos.design', 'project_id')
-
-    @api.depends('designs_ids')
-    def _compute_project_design(self):
-        for record in self:
-            if len(record.designs_ids) > 0:
-                record.design_id = record.designs_ids[0]
-
-    def _inverse_project_design(self):
-        for record in self:
-            if len(record.designs_ids) > 0:
-                design = record.env['gestion_proyectos.design'].browse(p.designs_ids[0])
-                design.project_id = False
-            record.design_id.project_id = record
     
-    # Pagina 2. Campos del diseño. Si lo hacemos de manera predeterminada sale una emergente. Queremos mostrarlos de forma directa en la página,
-    # para ello hemos de acceder a los valores de design_id y hacer un 'related' y funciones con @api.onchange('campo_a_mostrar')
-
-    # Página 3. Productos y Materiales - El proyecto permite seleccionar productos y materiales. TODO: Materiales escogidos automáticamente en función
-    # de los productos / Permitir escoger número de Productos y Materiales.
+    # Página 3. Productos y Materiales - El proyecto permite seleccionar productos y materiales:
     
     # Productos con tabla intermedia para manejar el many2many en una misma tabla con materiales:
     products_ids = fields.Many2many('product.product', string= 'Productos', relation='project_product', column1='product_id', column2='project_id',
@@ -64,6 +43,7 @@ class Project(models.Model):
     # Materiales con tabla intermedia para manejar el many2many en una misma tabla con productos:
     materials_ids = fields.Many2many('product.product', string= 'Materiales', relation='project_materials', column1='product_id', column2='project_id',
                                      domain="[('categ_id', '=', 'Materiales')]")
+    # TODO: Materiales escogidos automáticamente en función de los productos
 
     # Página 4 - Operarios. Asignamos operarios al proyecto. TODO: Marcar el operario como no disponible en la fecha?
     operarios_ids = fields.Many2many('hr.employee', string= 'Operarios', required=True, domain="[('job_title', '=', 'Operario')]")
@@ -71,9 +51,8 @@ class Project(models.Model):
     # Página 5 - Vehículo. Asignamos vehículos al proyecto. TODO: Marcar el vehículo como no disponible en la fecha?
     vehiculos_ids = fields.Many2many('fleet.vehicle', string = 'Vehiculo', required=True) #TODO Domain - 'Tipoinstalación'
 
-    # Página 6 - Milestones (hitos). Los proyectos tienen unos hitos asociados.
+    # Página 6 - Milestones (hitos). Los proyectos tienen unos hitos asociados. # TODO: Gestionar las tablas y sus estados
     milestones_ids = fields.Many2many('gestion_proyectos.milestone', string = "Hitos")
-
 
     ### - Restricciones y campos computados - ###
 
@@ -127,13 +106,15 @@ class Project(models.Model):
 
 
     # TODO: Función para cambiar el estado del proyecto de "Planificación" a "En ejecución" si se cumplen los requisitos (todo asignado y plan diseñado)
-    @api.onchange('design_id')
-    def _change_project_stage(self):
-        for record in self:
-            if record.design_id != '':
-                pass
-            else:
-                record.fase = 'exec'
+    # @api.onchange('design_id')
+    # def _change_project_stage(self):
+    #     for record in self:
+    #         if record.design_id != False:
+    #             print("Se ha encontrado un diseño.")
+    #             record.fase = 'exec'
+    #         else:
+    #             print("No se ha encontrado un diseño.")
+
     
     # Función que carga todas las tareas automáticamente al iniciar un Proyecto:
     @api.onchange('tasks_ids')
@@ -148,14 +129,31 @@ class Project(models.Model):
     def _load_available_milestones(self):
         available_milestones = self.env['gestion_proyectos.milestone'].search([])
         self.milestones_ids = available_milestones
+    
+    # Función compute para obtener el diseño específico de un proyecto:
+    @api.depends('designs_ids','fase')
+    def _compute_project_design(self):
+        for record in self:
+            if len(record.designs_ids) > 0:
+                record.design_id = record.designs_ids[0]
+                if record.design_id:
+                    record.fase = 'exec'
+
+    # Función inverse para proporcionar al proyecto el diseño específico:
+    def _inverse_project_design(self):
+        for record in self:
+            if len(record.designs_ids) > 0:
+                design = record.env['gestion_proyectos.design'].browse(p.designs_ids[0])
+                design.project_id = False
+            record.design_id.project_id = record
 
     # Funciones que marcan automáticamente las tareas del Proyecto - TODO - Actualiza el valor de tareas en todos los proyectos - 
-    @api.onchange('tasks_ids','products_ids','materials_ids')   # Productos y materiales
-    def _check_products_materials_task(self):
-        if self.products_ids and self.materials_ids:
-            for task in self.tasks_ids:
-                if task.task_name == 'Asignados Productos y Materiales':
-                    task.write({'task_completed':True})
+    # @api.onchange('tasks_ids','products_ids','materials_ids')   # Productos y materiales
+    # def _check_products_materials_task(self):
+    #     if self.products_ids and self.materials_ids:
+    #         for task in self.tasks_ids:
+    #             if task.task_name == 'Asignados Productos y Materiales':
+    #                 task.write({'task_completed':True})
 
     # @api.onchange('tasks_ids','operarios_ids')
     # def _check_operarios_task(self):

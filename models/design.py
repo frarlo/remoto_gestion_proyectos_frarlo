@@ -52,8 +52,21 @@ class Design(models.Model):
     recommended_eolic = fields.Char(compute="_get_eolics", readonly=True)
 
     # Cargador automoción:
-    
+    car_type = fields.Selection([
+        ('type1','Híbrido enchufable'),
+        ('type2','Eléctrico')
+        ]
+    )
+    charger_type = fields.Char(compute='_compute_charger_type', readonly=True)
 
+    # Una simple función para recomendar el tipo de cargador recomendado según el tipo de vehículo:
+    @api.depends('car_type')
+    def _compute_charger_type(self):
+        for record in self:
+            if record.car_type == 'type1':
+                record.charger_type = 'Carga doméstica / lenta'
+            else:
+                record.charger_type = 'Carga semirrápida / acelerada'
     
     # Calcula el número de placas solares (térmicas y fotovoltaicas) sobre los metros cuadrados:
     @api.depends('square_meters')
@@ -77,7 +90,8 @@ class Design(models.Model):
     @api.depends('recommended_solars')            
     def _get_batteries(self):
         for record in self:
-            if record.recommended_solars and record.client_wants_batteries:
+            record.recommended_batteries = 0
+            if record.recommended_solars and record.client_wants_batteries and record.project_type == 'tipo1':
                 record.recommended_batteries = record.recommended_solars // 5    # Example, not sure
             else:
                 record.recommended_batteries = 0
@@ -95,29 +109,41 @@ class Design(models.Model):
     @api.depends('wind_levels')
     def _get_eolics(self):
         for record in self:
-            if record.wind_levels < 30:
+            if record.wind_levels <= 30:
                 record.recommended_eolic = 'Instalación a nivel de terrado'
             elif record.wind_levels > 30 and record.wind_levels < 60:
                 record.recommended_eolic = 'Instalación a media altura en suelo con soportes'
             else:
                 record.recommended_eolic = 'Instalación a nivel de suelo'
 
-
-    # TODO - Calcula el presupuesto de instalación (debería añadirse al precio de todo los productos y materiales obviamente):
-    @api.depends('recommended_aerotermics','recommended_solars','recommended_batteries')
+    # Calcula el presupuesto de la instalación # TODO - Repasar 
+    @api.depends('quote_amount','recommended_aerotermics','recommended_solars','recommended_batteries','recommended_conditioners','recommended_eolic','car_type')
     def _get_quote(self):
         for record in self:
-            if record.recommended_aerotermics:
-                record.quote_amount = record.recommended_aerotermics * 350
-            if record.recommended_solars:
-                record.quote_amount = record.recommended_solars * 200
-            if record.recommended_batteries:
-                record.quote_amount = record.recommended_batteries * 50
+            # Reset:
+            record.quote_amount = 0
+            if record.project_type == 'tipo1':
+                if record.client_wants_batteries == False:
+                    record.quote_amount = record.recommended_solars * 200
+                else:
+                    record.quote_amount = record.recommended_solars * 200 + record.recommended_batteries * 50
+            elif record.project_type == 'tipo2':
+                record.quote_amount = record.recommended_solars * 175
+            elif record.project_type == 'tipo3':
+                record.quote_amount = record.recommended_aerotermics * 700
+            elif record.project_type == 'tipo4':
+                record.quote_amount = record.recommended_conditioners * 500
+            elif record.project_type == 'tipo5':
+                if record.recommended_eolic == 'Instalación a nivel de terrado':
+                    record.quote_amount = 3500
+                elif record.recommended_eolic == 'Instalación a media altura en suelo con soportes':
+                    record.quote_amount = 3000
+                else:
+                    record.quote_amount = 1850           
+            elif record.project_type == 'tipo6':
+                if record.car_type == 'type1':
+                    record.quote_amount = 600
+                else:
+                    record.quote_amount = 1500
             else:
                 record.quote_amount = 0
-
-
-    # TODO - Restricción SQL:
-    # _sql_constraints = [
-    #     ('design_uniq', 'unique(project_id)', 'No puede haber otro proyecto con este diseño'),
-    # ]

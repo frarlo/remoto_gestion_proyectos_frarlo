@@ -51,7 +51,7 @@
                   </group>
                 </page>
                 <page string="Diseño" name="page_2">
-                  <group string="Crea un nuevo diseño de instalación o edita el existente:">
+                  <group string="Crea un nuevo diseño de instalación o edita el existente">
                     <group>
                       <button type="object" icon="fa-gavel" class='oe_highlight' name="edit_design" string="Editar diseño" attrs="{'invisible':[('design_id','==', False)]}" />
                       <separator/>
@@ -130,13 +130,27 @@
             </group>
           <!-- Este grupo puede tener campos específicos según el tipo de Proyecto elegido -->
           <group string="Diseño específico"> 
-            <field name="square_meters" string="Metros cuadrados de la instalación"/>
+            
+            <field name="square_meters" string="Metros cuadrados disponibles/a refrigerar" attrs="{'invisible': ['|', ('project_type', '==', 'tipo6'), ('project_type', '==', 'tipo5')]}" />
+            
             <field name="recommended_solars" string="Cantidad de placas recomendadas" attrs="{'invisible': [('project_type', '!=', 'tipo1')]}"  />
+            
             <field name="client_wants_batteries" string="¿El cliente desea instalar baterías?" attrs="{'invisible': [('project_type', '!=', 'tipo1')]}"  />
-            <field name="recommended_batteries" string="Número de baterías recomendadas" attrs="{'invisible': [('client_wants_batteries', '==', False)]}"  />
+            
+            <field name="recommended_batteries" string="Número de baterías recomendadas" attrs="{'invisible': ['&amp;',('project_type', '!=', 'tipo1'), ('client_wants_batteries', '==', False)]}"  />
+            
             <field name="recommended_aerotermics" string="Cantidad de aparatos de Aerotermia recomendados" attrs="{'invisible': [('project_type', '!=', 'tipo3')]}" />
+
+            <field name="recommended_conditioners" string="Cantidad de aparatos de Climatización recomendados" attrs="{'invisible': [('project_type', '!=', 'tipo4')]}" />
+            
             <field name="wind_levels" string="Velocidad media del viento en terrado del cliente" attrs="{'invisible': [('project_type', '!=', 'tipo5')]}" />
+            
             <field name="recommended_eolic" string="Lugar de instalación recomendado" attrs="{'invisible': [('project_type', '!=', 'tipo5')]}" />
+
+            <field name="car_type" string="Tipo de vehículo/s a recargar" attrs="{'invisible': [('project_type','!=','tipo6')]}" />
+            
+            <field name="charger_type" string="Tipo de vehículo/s a recargar" attrs="{'invisible': [('project_type','!=','tipo6')]}" />
+
           </group>
           <group string="Presupuesto">
             <field name="quote_amount" string="Presupuesto de instalación estimado"/>
