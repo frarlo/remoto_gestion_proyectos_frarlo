@@ -13,7 +13,7 @@ class Design(models.Model):
     # Cada diseño tiene un project_id:
     project_id = fields.Many2one('gestion_proyectos.project')
         
-    # En función del tipo de proyecto pueden aparecer unos campos o no:
+    # En función del tipo de proyecto pueden aparecer unos campos o no (Único)
     project_type = fields.Selection(
         [('tipo1', 'Solar Fotovoltaica'),
          ('tipo2', 'Solar Térmica'),
@@ -38,6 +38,7 @@ class Design(models.Model):
     # Solar Fotovoltaica - Térmica:
     
     recommended_solars = fields.Float(compute='_get_solars', readonly=True)
+    client_wants_batteries = fields.Boolean()
     recommended_batteries = fields.Float(compute='_get_batteries', readonly=True)
 
     # Aerotermia:
@@ -76,7 +77,7 @@ class Design(models.Model):
     @api.depends('recommended_solars')            
     def _get_batteries(self):
         for record in self:
-            if record.recommended_solars:
+            if record.recommended_solars and record.client_wants_batteries:
                 record.recommended_batteries = record.recommended_solars // 5    # Example, not sure
             else:
                 record.recommended_batteries = 0
@@ -114,8 +115,6 @@ class Design(models.Model):
                 record.quote_amount = record.recommended_batteries * 50
             else:
                 record.quote_amount = 0
-
-    # TODO - El diseño puede ser editado en "cualquier" momento por lo tanto no deben haber restricciones en su creación más allá de seleccionar el tipo:
 
 
     # TODO - Restricción SQL:
