@@ -53,14 +53,10 @@
                 </page>
                 <page string="Diseño" name="page_2">
                   <group string="Crea un nuevo diseño de instalación o edita el existente">
-                    <group>
                       <button type="object" icon="fa-gavel" class='oe_highlight' name="edit_design" string="Editar diseño" attrs="{'invisible':[('design_id','==', False)]}" />
                       <separator/>
-                      <button type="object" icon="fa-gavel" class='oe_highlight' name="create_design" string="Crear diseño" attrs="{'invisible':[('design_id','!=', False)]}" />
-                    </group>
-                  </group>
-                  <group>
-                    <field name="design_id" invisible="1" />
+                      <button type="object" icon="fa-wrench" class='oe_highlight' name="create_design" string="Crear diseño" attrs="{'invisible':[('design_id','!=', False)]}" />
+                      <field name="design_id" invisible="1" />
                   </group>
                 </page>
                 <page string="Productos y Materiales" name="page_3">
