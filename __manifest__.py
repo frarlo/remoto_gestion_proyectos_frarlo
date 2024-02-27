@@ -26,9 +26,11 @@
     'application': True,
 
     # always loaded
-    'data': [
-        # TODO - change security access with roles
-        'security/ir.model.access.csv',
+    'data': [               #TODO - Demo data
+        # security:
+        'security/groups.xml',
+        'security/access.xml',
+        # views:
         'views/views.xml',
         'views/templates.xml',
         # reports

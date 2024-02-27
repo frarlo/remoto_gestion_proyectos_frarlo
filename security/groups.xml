@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+
+      <record id="gestion_proyectos.category_group" model="ir.module.category">
+        <field name="name">Gestión de Proyectos</field>
+      </record>
+  
+      <record id="gestion_proyectos.group_ENGINEER" model="res.groups">
+        <field name="name">Ingenieros</field>
+        <field name="category_id" ref="gestion_proyectos.category_group"/>
+      </record>
+  
+      <record id="gestion_proyectos.group_WORKER" model="res.groups">
+        <field name="name">Operarios</field>
+        <field name="category_id" ref="gestion_proyectos.category_group"/>
+      </record>
+  
+      <record id="gestion_proyectos.group_ADMINISTRATIVE" model="res.groups">
+        <field name="name">Administrativos</field>
+        <field name="category_id" ref="gestion_proyectos.category_group"/>
+      </record>
+      
+    </data>
+</odoo>
+  

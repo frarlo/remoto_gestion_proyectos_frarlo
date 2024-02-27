@@ -103,19 +103,7 @@ class Project(models.Model):
                 'target':'new',
                 'context': {'default_project_id': self.id }} # New
     # Asignamos el contexto de crear: el project id del diseño será el propio ID del Proyecto. 
-
-
-    # TODO: Función para cambiar el estado del proyecto de "Planificación" a "En ejecución" si se cumplen los requisitos (todo asignado y plan diseñado)
-    # @api.onchange('design_id')
-    # def _change_project_stage(self):
-    #     for record in self:
-    #         if record.design_id != False:
-    #             print("Se ha encontrado un diseño.")
-    #             record.fase = 'exec'
-    #         else:
-    #             print("No se ha encontrado un diseño.")
-
-    
+   
     # Función que carga todas las tareas automáticamente al iniciar un Proyecto:
     @api.onchange('tasks_ids')
     def _load_available_tasks(self):
