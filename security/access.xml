@@ -1,7 +1,7 @@
 <odoo>
     <data>
         
-        <!-- Permisos globales del módulo -->
+        <!-- Permisos de Proyecto -->
 
         <!-- Permisos de Ingenieros -->
         <record id="gestion_proyectos.proyectos_validation_access_engineer" model="ir.model.access">
@@ -49,6 +49,7 @@
 
         <!-- Permisos específicos de "design.py" Sólo los ingenieros pueden modificar, los demás pueden sólo leer-->
         
+        <!-- Permisos de Ingenieros -->
         <record id="gestion_proyectos.proyectos_design_validation_access_engineer" model="ir.model.access">
             <field name="name">Acceso de los ingenieros a los diseños de los Proyectos</field>
             <field name="model_id" ref="model_gestion_proyectos_design"/>
@@ -59,6 +60,29 @@
             <field name="perm_unlink">1</field>
         </record>
 
+        <!-- Permisos de Operarios -->
+        <record id="gestion_proyectos.proyectos_design_validation_access_worker" model="ir.model.access">
+            <field name="name">Acceso de los operarios a los diseños de los Proyectos</field>
+            <field name="model_id" ref="model_gestion_proyectos_design"/>
+            <field name="group_id" ref="gestion_proyectos.group_WORKER"/>
+            <field name="perm_read">1</field>
+            <field name="perm_create">0</field>
+            <field name="perm_write">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+  
+        <!-- Permisos de Administrativos -->
+        <record id="gestion_proyectos.proyectos_design_validation_access_administrative" model="ir.model.access">
+            <field name="name">Acceso de los administrativos a los Proyectos</field>
+            <field name="model_id" ref="model_gestion_proyectos_design"/>
+            <field name="group_id" ref="gestion_proyectos.group_ADMINISTRATIVE"/>
+            <field name="perm_read">1</field>
+            <field name="perm_create">0</field>
+            <field name="perm_write">0</field>
+            <field name="perm_unlink">0</field>
+        </record>       
+
+        <!-- Permisos de usuarios generales -->
         <record id="gestion_proyectos.proyectos_design_validation_access_base" model="ir.model.access">
             <field name="name">Acceso de los usuarios generales al diseño de un Proyecto</field>
             <field name="model_id" ref="model_gestion_proyectos_design"/>
@@ -69,10 +93,11 @@
             <field name="perm_unlink">0</field>
         </record>
 
-        <!-- Permisos específicos de "task.py" y "milestone.py" Sólo los ingenieros pueden modificar, los demás pueden sólo leer-->
+        <!-- Permisos específicos de Tareas. Sólo los ingenieros pueden modificar, los demás pueden leer-->
         
+        <!-- Permisos de Ingenieros -->
         <record id="gestion_proyectos.proyectos_task_validation_access_engineer" model="ir.model.access">
-            <field name="name">Acceso de los ingenieros a los tareas de los Proyectos</field>
+            <field name="name">Acceso de los ingenieros a las tareas de los Proyectos</field>
             <field name="model_id" ref="model_gestion_proyectos_task"/>
             <field name="group_id" ref="gestion_proyectos.group_ENGINEER"/>
             <field name="perm_read">1</field>
@@ -81,6 +106,29 @@
             <field name="perm_unlink">1</field>
         </record>
 
+        <!-- Permisos de Operarios -->
+        <record id="gestion_proyectos.proyectos_task_validation_access_worker" model="ir.model.access">
+            <field name="name">Acceso de los operarios a las tareas de los Proyectos</field>
+            <field name="model_id" ref="model_gestion_proyectos_task"/>
+            <field name="group_id" ref="gestion_proyectos.group_WORKER"/>
+            <field name="perm_read">1</field>
+            <field name="perm_create">0</field>
+            <field name="perm_write">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+  
+        <!-- Permisos de Administrativos -->
+        <record id="gestion_proyectos.proyectos_task_validation_access_administrative" model="ir.model.access">
+            <field name="name">Acceso de los administrativos a las tareas de los Proyectos</field>
+            <field name="model_id" ref="model_gestion_proyectos_task"/>
+            <field name="group_id" ref="gestion_proyectos.group_ADMINISTRATIVE"/>
+            <field name="perm_read">1</field>
+            <field name="perm_create">0</field>
+            <field name="perm_write">0</field>
+            <field name="perm_unlink">0</field>
+        </record>           
+
+        <!-- Permisos de usuarios generales -->
         <record id="gestion_proyectos.proyectos_task_validation_access_base" model="ir.model.access">
             <field name="name">Acceso de los usuarios generales a las tareas de un Proyecto</field>
             <field name="model_id" ref="model_gestion_proyectos_task"/>
@@ -91,15 +139,40 @@
             <field name="perm_unlink">0</field>
         </record>
 
+        <!-- Permisos específicos de Hitos. Los Ingenieros tienen control total pero los Operarios pueden modificar -->
+
+        <!-- Permisos de Ingenieros -->
         <record id="gestion_proyectos.proyectos_milestone_validation_access_engineer" model="ir.model.access">
             <field name="name">Acceso de los ingenieros a los hitos de los Proyectos</field>
-            <field name="model_id" ref="model_gestion_proyectos_task"/>
+            <field name="model_id" ref="model_gestion_proyectos_milestone"/>
             <field name="group_id" ref="gestion_proyectos.group_ENGINEER"/>
             <field name="perm_read">1</field>
             <field name="perm_create">1</field>
             <field name="perm_write">1</field>
             <field name="perm_unlink">1</field>
         </record>
+
+        <!-- Permisos de Operarios -->
+        <record id="gestion_proyectos.proyectos_milestone_validation_access_worker" model="ir.model.access">
+            <field name="name">Acceso de los operarios a los hitos de los Proyectos</field>
+            <field name="model_id" ref="model_gestion_proyectos_milestone"/>
+            <field name="group_id" ref="gestion_proyectos.group_WORKER"/>
+            <field name="perm_read">1</field>
+            <field name="perm_create">0</field>
+            <field name="perm_write">1</field>
+            <field name="perm_unlink">0</field>
+        </record>
+  
+        <!-- Permisos de Administrativos -->
+        <record id="gestion_proyectos.proyectos_milestone_validation_access_administrative" model="ir.model.access">
+            <field name="name">Acceso de los administrativos a los hitos de los Proyectos</field>
+            <field name="model_id" ref="model_gestion_proyectos_milestone"/>
+            <field name="group_id" ref="gestion_proyectos.group_ADMINISTRATIVE"/>
+            <field name="perm_read">1</field>
+            <field name="perm_create">0</field>
+            <field name="perm_write">0</field>
+            <field name="perm_unlink">0</field>
+        </record>         
 
         <record id="gestion_proyectos.proyectos_milestone_validation_access_base" model="ir.model.access">
             <field name="name">Acceso de los usuarios generales a los hitos de un Proyecto</field>
