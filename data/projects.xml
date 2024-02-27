@@ -1,0 +1,13 @@
+<odoo>
+    <data >
+      <!-- Proyectos -->
+      <record model="gestion_proyectos.project" id="gestion_proyectos.project_ALPHA">
+        <!-- <field name="address">Calle Misericordia</field>
+        <field name="code">4600001</field>
+        <field name="name">CEED</field>
+        <field name="type">CIFP</field>
+        <field name="comments">Es un centro donde todo se estudia a distancia</field>   -->
+      </record>
+  
+    </data>
+  </odoo>

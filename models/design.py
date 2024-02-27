@@ -116,7 +116,7 @@ class Design(models.Model):
             else:
                 record.recommended_eolic = 'Instalación a nivel de suelo'
 
-    # Calcula el presupuesto de la instalación # TODO - Repasar 
+    # Calcula el presupuesto de la instalación
     @api.depends('quote_amount','recommended_aerotermics','recommended_solars','recommended_batteries','recommended_conditioners','recommended_eolic','car_type')
     def _get_quote(self):
         for record in self:
@@ -124,9 +124,9 @@ class Design(models.Model):
             record.quote_amount = 0
             if record.project_type == 'tipo1':
                 if record.client_wants_batteries == False:
-                    record.quote_amount = record.recommended_solars * 200
+                    record.quote_amount = record.recommended_solars * 150
                 else:
-                    record.quote_amount = record.recommended_solars * 200 + record.recommended_batteries * 50
+                    record.quote_amount = record.recommended_solars * 145 + record.recommended_batteries * 50
             elif record.project_type == 'tipo2':
                 record.quote_amount = record.recommended_solars * 175
             elif record.project_type == 'tipo3':

@@ -118,12 +118,13 @@ class Project(models.Model):
         available_milestones = self.env['gestion_proyectos.milestone'].search([])
         self.milestones_ids = available_milestones
     
-    # Función compute para obtener el diseño específico de un proyecto:
+    # Función compute para obtener el diseño específico de un proyecto.
     @api.depends('designs_ids','fase')
     def _compute_project_design(self):
         for record in self:
             if len(record.designs_ids) > 0:
                 record.design_id = record.designs_ids[0]
+                # Esto sería conveniente moverlo a otro sitio (puede crearse un diseño y no estar listo aun)
                 if record.design_id:
                     record.fase = 'exec'    # Si el proyecto tiene un design_id quiere decir que tiene un diseño y puede pasar a fase de ejecución
 

@@ -9,5 +9,4 @@ class Milestone(models.Model):
     _rec_name = 'milestone_name'
 
     milestone_name = fields.Char(string='Nombre del hito', required = True)
-    milestone_active = fields.Boolean(string='Activo', default=True)
     milestone_completed = fields.Boolean(string="Cumplido", default=False)
