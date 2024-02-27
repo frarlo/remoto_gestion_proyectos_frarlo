@@ -28,7 +28,7 @@ class Project(models.Model):
                             readonly= True)     # El usuario no puede cambiarla manualmente
 
     # Pagina 1. Tareas - El proyecto tiene una lista de tareas que implementar. # TODO: Gestionar las tablas y sus estados
-    tasks_ids = fields.Many2many('gestion_proyectos.task', string="Tareas")
+    tasks_ids = fields.Many2many('gestion_proyectos.task', string="Tareas")                         
 
     # Pagina 2. Diseño del Proyecto - Cada proyecto tiene un diseño específico. Necesita un compute y un inverse para hacer get del diseño y settearlo
     design_id = fields.Many2one('gestion_proyectos.design', compute='_compute_project_design', inverse='_inverse_project_design')

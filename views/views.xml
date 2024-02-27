@@ -53,10 +53,12 @@
                 </page>
                 <page string="Diseño" name="page_2">
                   <group string="Crea un nuevo diseño de instalación o edita el existente">
-                      <button type="object" icon="fa-gavel" class='oe_highlight' name="edit_design" string="Editar diseño" attrs="{'invisible':[('design_id','==', False)]}" />
-                      <separator/>
+                    <!-- El div permite que los botones de Crear y Editar diseño aparezca en el mismo sitio -->
+                    <div>
+                      <button type="object" icon="fa-gavel" class='oe_highlight' name="edit_design" string="Editar diseño" attrs="{'invisible':[('design_id','==', False)]}" /> 
                       <button type="object" icon="fa-wrench" class='oe_highlight' name="create_design" string="Crear diseño" attrs="{'invisible':[('design_id','!=', False)]}" />
                       <field name="design_id" invisible="1" />
+                    </div>
                   </group>
                 </page>
                 <page string="Productos y Materiales" name="page_3">
@@ -67,10 +69,9 @@
                         <!-- <field name="qty_available" string="Existencias" /> -->
                       </tree>
                     </field>
-                    <field name="materials_ids" string="Materiales" colspan="2">
+                    <field name="materials_ids" string="Materiales">
                       <tree>
                         <field name="name" string="Material" />
-                        <!-- <field name="qty_available" string="Existencias" /> -->
                       </tree>
                     </field>
                   </group> 
@@ -127,15 +128,20 @@
             </group>
           <!-- Este grupo puede tener campos específicos según el tipo de Proyecto elegido -->
           <group string="Diseño específico"> 
-            
-            <field name="square_meters" string="Metros cuadrados disponibles/a refrigerar" attrs="{'invisible': ['|', ('project_type', '==', 'tipo6'), ('project_type', '==', 'tipo5')]}" />
-            
-            <field name="recommended_solars" string="Cantidad de placas recomendadas" attrs="{'invisible': [('project_type', '!=', 'tipo1')]}"  />
-            
-            <field name="client_wants_batteries" string="¿El cliente desea instalar baterías?" attrs="{'invisible': [('project_type', '!=', 'tipo1')]}"  />
-            
-            <field name="recommended_batteries" string="Número de baterías recomendadas" attrs="{'invisible': ['&amp;',('project_type', '!=', 'tipo1'), ('client_wants_batteries', '==', False)]}"  />
-            
+
+            <!-- La visibilidad de los metros cuadrados es especial ya que se usa para todos los tipos de proyecto salvo dos -->
+            <div attrs="{'invisible': ['|', ('project_type', '==', 'tipo6'), ('project_type', '==', 'tipo5')]}">
+              <label for="square_meters" string="Metros cuadrados disponibles" style="font-weight: bold;"/>
+              <field name="square_meters" />
+            </div>
+
+            <!-- Los demás campos van apareciendo o desapareciendo según el tipo de proyecto (espaciados para mejorar legibilidad) -->
+            <field name="client_wants_batteries" string="¿El cliente desea instalar baterías?" attrs="{'invisible': [('project_type', '!=', 'tipo1')]}" />
+
+            <field name="recommended_solars" string="Cantidad de placas recomendadas" attrs="{'invisible': ['&amp;', ('project_type', '!=', 'tipo1'), ('project_type', '!=', 'tipo2')]}"  />
+  
+            <field name="recommended_batteries" string="Número de baterías recomendadas" attrs="{'invisible': [('project_type', '!=', 'tipo1')]}"  />
+          
             <field name="recommended_aerotermics" string="Cantidad de aparatos de Aerotermia recomendados" attrs="{'invisible': [('project_type', '!=', 'tipo3')]}" />
 
             <field name="recommended_conditioners" string="Cantidad de aparatos de Climatización recomendados" attrs="{'invisible': [('project_type', '!=', 'tipo4')]}" />
@@ -146,12 +152,15 @@
 
             <field name="car_type" string="Tipo de vehículo/s a recargar" attrs="{'invisible': [('project_type','!=','tipo6')]}" />
             
-            <field name="charger_type" string="Tipo de vehículo/s a recargar" attrs="{'invisible': [('project_type','!=','tipo6')]}" />
+            <field name="charger_type" string="Tipo de cargador recomendado" attrs="{'invisible': [('project_type','!=','tipo6')]}" />
 
           </group>
+          
+          <!-- Finalmente se muestra un presupuesto aproximado de la mano de obra de la instalación -->
           <group string="Presupuesto">
             <field name="quote_amount" string="Presupuesto de instalación estimado"/>
           </group>
+
         </form>
       </field>
     </record>
