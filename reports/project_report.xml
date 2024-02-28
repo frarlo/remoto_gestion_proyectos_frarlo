@@ -19,28 +19,28 @@
         <t t-foreach="docs" t-as="project">
           <t t-call="web.external_layout">
             <div class="page">
-              <div class="datos-proyecto" style="padding: 3px; margin-bottom: 5px;"> <!-- TODO: Mejorar la presentación de los datos básicos del proyecto -->
-                <h5 style="font-weight: bold;">Nombre del Proyecto:</h5>
-                <p><t t-esc="project.auto_id"/></p>
-                <h5 style="font-weight: bold;">Cliente:</h5>
-                <p><t t-esc="project.cliente_id.name"/></p>
-                <h5 style="font-weight: bold;">Ingeniero encargado:</h5>
-                <p><t t-esc="project.ingeniero_id.name"/></p>
-                <h5 style="font-weight: bold;">Fecha de inicio </h5>
-                <p><t t-esc="project.fecha_inicio"/></p>
-                <h5 style="font-weight: bold;">Fecha estimada:</h5>
+              <div class="datos-proyecto">
+                <h5 style="font-weight: bold;">Nombre del Proyecto</h5>
+                <p style="color: #4A90E2;"><t t-esc="project.auto_id"/></p>
+                <h5 style="font-weight: bold;">Cliente</h5>
+                <p style="color: #4A90E2;"><t t-esc="project.cliente_id.name"/></p>
+                <h5 style="font-weight: bold;">Ingeniero encargado</h5>
+                <p style="color: #4A90E2;"><t t-esc="project.ingeniero_id.name"/></p>
+                <h5 style="font-weight: bold;">Fecha de inicio</h5>
+                <p style="color: #4A90E2;"><t t-esc="project.fecha_inicio.strftime('%d-%m-%Y')"/></p>
+                <h5 style="font-weight: bold;">Fecha estimada</h5>
                 <div>
-                  <p t-if="project.fecha_estimada"><t t-esc="project.fecha_estimada"/></p>
+                  <p t-if="project.fecha_estimada" style="color: #4A90E2;"><t t-esc="project.fecha_estimada.strftime('%d-%m-%Y')"/></p>
                   <p t-else="">Sin fecha estimada</p>
                 </div>
               </div>
-              <div class="productos-materiales" style="padding: 3px; margin-bottom: 5px;">
-                <div class="productos" >
-                  <h5 style="font-weight: bold;">Productos contratados</h5>
+              <div class="productos-materiales" style="margin-bottom: 2px;">
+                <h5 style="font-weight: bold;">Resumen de los productos y materiales</h5>
+                <div class="productos" style="margin-bottom: 2px;">
                     <table style="border-collapse: collapse; width: 100%;">
                       <thead>
                         <tr style="background-color: #4A90E2; color: white;">
-                        <th style="padding: 8px; border: 1px solid #dddddd;">Tipo de material utilizado</th>
+                        <th style="padding: 8px; border: 1px solid #dddddd;">Producto/s contratados</th>
                       </tr>
                       </thead>
                       <tbody>
@@ -53,11 +53,10 @@
                     </table>
                 </div>
                 <div class="materiales">
-                  <h5 style="font-weight: bold;">Materiales utilizados</h5>
                     <table style="border-collapse: collapse; width: 100%;">
                       <thead>
                         <tr style="background-color: #4A90E2; color: white;">
-                          <th style="padding: 8px; border: 1px solid #dddddd;">Tipo de material utilizado</th>
+                          <th style="padding: 8px; border: 1px solid #dddddd;">Materiales utilizados</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -70,7 +69,7 @@
                     </table>
                 </div>
               </div>
-              <div class="operarios-vehiculos" style="padding: 3px; margin-bottom: 5px;">
+              <div class="operarios-vehiculos" style="margin-bottom: 2px;">
                 <div class="operarios">
                   <h5 style="font-weight: bold;">Operarios encargados</h5>
                   <table style="border-collapse: collapse; width: 100%;">
@@ -90,7 +89,7 @@
                     </tbody>
                 </table>
                 </div>
-                <div class="vehiculos" style="padding-top: 3px;">
+                <div class="vehiculos">
                   <h5 style="font-weight: bold;">Vehículos utilizados</h5>
                     <table style="border-collapse: collapse; width: 100%;">
                       <thead>

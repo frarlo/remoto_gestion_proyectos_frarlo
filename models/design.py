@@ -21,7 +21,7 @@ class Design(models.Model):
          ('tipo4', 'Climatización'),
          ('tipo5', 'Minieólica'),
          ('tipo6', 'Supercargador automoción')
-          ], required=True
+          ], required=True, default='tipo1'
     )
 
     # Campos comunes a todos los diseños (Observaciones de cliente e ingeniero, localización de la instalación recomendada y presupuesto (de instalación))

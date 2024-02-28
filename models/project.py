@@ -28,7 +28,7 @@ class Project(models.Model):
                             readonly= True)     # El usuario no puede cambiarla manualmente
 
     # Pagina 1. Tareas - El proyecto tiene una lista de tareas que implementar. # TODO: Gestionar las tablas y sus estados
-    tasks_ids = fields.Many2many('gestion_proyectos.task', string="Tareas")                         
+    tasks_ids = fields.Many2many('gestion_proyectos.task', string="Tareas")
 
     # Pagina 2. Diseño del Proyecto - Cada proyecto tiene un diseño específico. Necesita un compute y un inverse para hacer get del diseño y settearlo
     design_id = fields.Many2one('gestion_proyectos.design', compute='_compute_project_design', inverse='_inverse_project_design')
@@ -105,12 +105,12 @@ class Project(models.Model):
     # Asignamos el contexto de crear: el project id del diseño será el propio ID del Proyecto. 
    
     # Función que carga todas las tareas automáticamente al iniciar un Proyecto:
-    @api.onchange('tasks_ids')
-    def _load_available_tasks(self):
-        # Obtenemos las tareas disponibles usando environment (no establecemos dominio de búsqueda ya que queremos añadir todas)
-        available_tasks = self.env['gestion_proyectos.task'].search([])
-        # Asociamos todas las tareas de forma predefinida:
-        self.tasks_ids = available_tasks
+    # @api.onchange('tasks_ids')
+    # def _load_available_tasks(self):
+    #     # Obtenemos las tareas disponibles usando environment (no establecemos dominio de búsqueda ya que queremos añadir todas)
+    #     available_tasks = self.env['gestion_proyectos.task'].search([])
+    #     # Asociamos todas las tareas de forma predefinida:
+    #     self.tasks_ids = available_tasks
     
     # Función que carga todos los hitos automáticamente al iniciar un Proyecto (funciona de forma similar a las tareas):
     @api.onchange('milestones_ids')
@@ -190,5 +190,3 @@ class Project(models.Model):
     #   _sql_constraints = (
     #       ('unique_id', 'unique(id)', 'El código debe ser único')    
     #    )
-        
-        
