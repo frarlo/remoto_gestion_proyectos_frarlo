@@ -2,12 +2,48 @@
     <data >
       <!-- Proyectos -->
       <record model="gestion_proyectos.project" id="gestion_proyectos.project_ALPHA">
-        <!-- <field name="address">Calle Misericordia</field>
-        <field name="code">4600001</field>
-        <field name="name">CEED</field>
-        <field name="type">CIFP</field>
-        <field name="comments">Es un centro donde todo se estudia a distancia</field>   -->
+        <field name="auto_id">PROYECTO COMUNIDAD LA CASBAH/0820</field>
+        <field name="cliente_id"></field>
+        <field name="fecha_inicio"></field>
+        <field name="fecha_estimada"></field>
+        <field name="ingeniero_id"></field>
+        <field name="fase"></field>
+        <field name="tasks_ids"></field>
+        <field name="design_id"></field>
+        <field name="products_ids"></field>
+        <field name="materials_ids"></field>
+        <field name="operarios_ids"></field>
+        <field name="vehiculos_ids"></field>
+        <field name="milestones_ids"></field>
       </record>
+
+      <record model="gestion_proyectos.project" id="gestion_proyectos.project_BETA">
+        <field name="auto_id">PROYECTO DE DEMOSTRACIÓN/9999</field>
+        <field name="cliente_id" eval="create({'name': 'Ayuntamiento Scranton'})"/>
+        <field name="fecha_inicio">2030-01-01</field>
+        <field name="fecha_estimada">2032-01-01</field>
+        <field name="ingeniero_id" eval="create({'name': 'Michael Scott'})"/>
+        <field name="fase">plan</field>
+        <field name="tasks_ids" eval="[(0, 0, {'task_name': 'Tarea 1', 'task_completed': False}), (0, 0, {'task_name': 'Tarea 2', 'task_completed': False})]"/>
+        <field name="design_id"></field>
+        <field name="products_ids" eval="[(0, 0, {'name': 'Equipo Aerotermia Daikin AX-117'})]"/>
+        <field name="materials_ids" eval="[(0, 0, {'name': 'Soporte Aerotermia L'})]"/>
+        <field name="operarios_ids" eval="[(0, 0, {'name': 'Darryl Philbin'})]"/>
+        <field name="vehiculos_ids" eval="[(0, 0, {'name': 'RAM 1800L 4.3L'})]"/>
+        <field name="milestones_ids" eval="[(0, 0, {'milestone_name': 'Hito 1', 'milestone_completed': False})]"/>
+      </record>
+
   
-    </data>
-  </odoo>
+        <!-- Ejemplos TC 
+        Referencia a otro modelos:
+        
+        <field name="students_ids" eval="[(6,0,[ref('modulo_tc.student_ANTPERLOP'),ref('modulo_tc.student_FRAGIMDON')])]"></field>
+
+        Como ejemplo de design_id: (cargaremos gestion_proyectos.design_ALPHA primero):
+        <field name="project_id" ref="gestion_proyectos.design_ALPHA"></field>
+
+        <field name="school_id" ref="modulo_tc.school_CEED"></field>
+        
+        -->
+  </data>
+</odoo>

@@ -34,6 +34,9 @@
         # views:
         'views/views.xml',
         'views/templates.xml',
+        # data models:
+        # 'data/projects.xml',
+        # 'data/gestion_proyectos.project.csv',
         # reports
         'reports/project_report.xml',
     ],

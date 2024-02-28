@@ -1,6 +1,5 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
-import re
 
 class Project(models.Model):
     """ Clase que implementa un Proyecto"""
@@ -182,7 +181,7 @@ class Project(models.Model):
     # @api.constrains('id')
     # def _check_id(self):
     #     for record in self:
-    #         pattern = re.compile('[A-Z]{2}\d{3}$')
+    #         pattern = re.compile('[A-Z]{2}\d{3}$') #If used import re
     #         if not pattern.match(record.code):
     #             raise ValidationError('El formato debe ser XXYYY')
             
