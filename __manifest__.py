@@ -24,6 +24,7 @@
 
     # application true
     'application': True,
+    'images': ['static/description/icon.png'],
 
     # always loaded
     'data': [               #TODO - Demo data
