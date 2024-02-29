@@ -194,5 +194,15 @@
             <field name="perm_unlink">1</field>
         </record>
 
+        <record id="gestion_proyectos.proyectos_project_milestone_rel_validation_access_base" model="ir.model.access">
+            <field name="name">Acceso de los usuarios generales a project milestone rels de un Proyecto</field>
+            <field name="model_id" ref="model_gestion_proyectos_project_milestone_rel"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_read">1</field>
+            <field name="perm_create">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_unlink">1</field>
+        </record>
+
     </data>
 </odoo>

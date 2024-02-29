@@ -26,13 +26,9 @@ class Project(models.Model):
                             default= 'plan',    # Fase predeterminada de inicio
                             readonly= True)     # El usuario no puede cambiarla manualmente
 
-    # Pagina 1. Tareas - El proyecto tiene una lista de tareas que implementar. # TODO: Gestionar las tablas y sus estados
+    # Pagina 1. Tareas - El proyecto tiene una lista de tareas que implementar. 
     tasks_ids = fields.One2many('gestion_proyectos.project_task_rel', 'project_id')
     
-
-
-    
-
     # Pagina 2. Diseño del Proyecto - Cada proyecto tiene un diseño específico. Necesita un compute y un inverse para hacer get del diseño y settearlo
     design_id = fields.Many2one('gestion_proyectos.design', compute='_compute_project_design', inverse='_inverse_project_design')
     designs_ids = fields.One2many('gestion_proyectos.design', 'project_id')
@@ -55,7 +51,7 @@ class Project(models.Model):
     vehiculos_ids = fields.Many2many('fleet.vehicle', string = 'Vehiculo', required=True) #TODO Domain - 'Tipoinstalación'
 
     # Página 6 - Milestones (hitos). Los proyectos tienen unos hitos asociados. # TODO: Gestionar las tablas y sus estados
-    milestones_ids = fields.Many2many('gestion_proyectos.milestone', string = "Hitos")
+    milestones_ids = fields.One2many('gestion_proyectos.project_milestone_rel', 'project_id')
 
     ### - Restricciones y campos computados - ###
 
@@ -108,18 +104,30 @@ class Project(models.Model):
     # Asignamos el contexto de crear: el project id del diseño será el propio ID del Proyecto. 
    
     # Función que carga todas las tareas automáticamente al iniciar un Proyecto:
-    # @api.onchange('tasks_ids')
-    # def _load_available_tasks(self):
-    #     # Obtenemos las tareas disponibles usando environment (no establecemos dominio de búsqueda ya que queremos añadir todas)
-    #     available_tasks = self.env['gestion_proyectos.task'].search([])
-    #     # Asociamos todas las tareas de forma predefinida:
-    #     self.tasks_ids = available_tasks
+    @api.onchange('tasks_ids')
+    def _load_available_tasks(self):
+        # Comprobamos que no se haya cargado ya una lista de tareas:
+        if len(self.tasks_ids) == 0:
+            # Obtenemos las tareas disponibles usando environment (no establecemos dominio de búsqueda ya que queremos añadir todas)
+            available_tasks = self.env['gestion_proyectos.task'].search([])
+            # Creamos una lista con las tareas que vamos a asignar automáticamente:
+            tasks_list = []
+            # Bucle que recorre cada tarea de todas las existentes...
+            for task in available_tasks:
+                # ... y las añade a la lista:
+                tasks_list.append((0, 0, {'project_id':self.id, 'task_id':task.id}))
+            # Asociamos todas las tareas de forma predefinida:
+            self.tasks_ids = tasks_list
     
     # Función que carga todos los hitos automáticamente al iniciar un Proyecto (funciona de forma similar a las tareas):
     @api.onchange('milestones_ids')
     def _load_available_milestones(self):
-        available_milestones = self.env['gestion_proyectos.milestone'].search([])
-        self.milestones_ids = available_milestones
+        if len(self.milestones_ids) == 0:
+            available_milestones = self.env['gestion_proyectos.milestone'].search([])
+            milestones_list = []
+            for milestone in available_milestones:
+                milestones_list.append((0,0,{'project_id':self.id, 'milestone_id':milestone.id}))
+            self.milestones_ids = milestones_list
     
     # Función compute para obtener el diseño específico de un proyecto.
     @api.depends('designs_ids','fase')
@@ -139,45 +147,45 @@ class Project(models.Model):
                 design.project_id = False
             record.design_id.project_id = record
 
-    # Funciones que marcan automáticamente las tareas del Proyecto - TODO - Actualiza el valor de tareas en todos los proyectos - 
-    # @api.onchange('tasks_ids','products_ids','materials_ids')   # Productos y materiales
-    # def _check_products_materials_task(self):
-    #     if self.products_ids and self.materials_ids:
-    #         for task in self.tasks_ids:
-    #             if task.task_name == 'Asignados Productos y Materiales':
-    #                 task.write({'task_completed':True})
+    # Funciones que marcan automáticamente las tareas del Proyecto
+    @api.onchange('tasks_ids','products_ids','materials_ids')   # Productos y materiales
+    def _check_products_materials_task(self):
+        if self.products_ids and self.materials_ids:
+            for task in self.tasks_ids:
+                if task.task_id.task_name == 'Asignados Productos y Materiales':
+                    task.write({'task_completed':True})
 
-    # @api.onchange('tasks_ids','operarios_ids')
-    # def _check_operarios_task(self):
-    #     for record in self:
-    #         if record.operarios_ids:
-    #             for task in record.tasks_ids:
-    #                 if task.task_name == 'Asignados Operarios':
-    #                     task.write({'task_completed':True})
+    @api.onchange('tasks_ids','operarios_ids')
+    def _check_operarios_task(self):
+        for record in self:
+            if record.operarios_ids:
+                for task in record.tasks_ids:
+                    if task.task_id.task_name == 'Asignados Operarios':
+                        task.write({'task_completed':True})
     
-    # @api.onchange('tasks_ids','vehiculos_ids')
-    # def _check_vehicles_task(self):
-    #     for record in self:
-    #         if record.vehiculos_ids:
-    #             for task in record.tasks_ids:
-    #                 if task.task_name == 'Asignado Vehículo':
-    #                     task.write({'task_completed':True})
+    @api.onchange('tasks_ids','vehiculos_ids')
+    def _check_vehicles_task(self):
+        for record in self:
+            if record.vehiculos_ids:
+                for task in record.tasks_ids:
+                    if task.task_id.task_name == 'Asignado Vehículo':
+                        task.write({'task_completed':True})
 
-    # @api.onchange('tasks_ids','milestones_ids')
-    # def _check_milestones_task(self):
-    #     for record in self:
-    #         if record.milestones_ids:
-    #             for task in record.tasks_ids:
-    #                 if task.task_name == 'Asignados Hitos':
-    #                     task.write({'task_completed':True})
+    @api.onchange('tasks_ids','milestones_ids')
+    def _check_milestones_task(self):
+        for record in self:
+            if record.milestones_ids:
+                for task in record.tasks_ids:
+                    if task.task_id.task_name == 'Asignados Hitos':
+                        task.write({'task_completed':True})
 
-    # @api.onchange('tasks_ids','design_id')
-    # def _check_design_task(self):
-    #     for record in self:
-    #         if record.design_id:
-    #             for task in record.tasks_ids:
-    #                 if task.task_name == 'Realizado Plan de Diseño':
-    #                     task.write({'task_completed':True})
+    @api.onchange('tasks_ids','design_id') # Lo actualiza pero no de forma directa. Revisar
+    def _check_design_task(self):
+        for record in self:
+            if record.design_id:
+                for task in record.tasks_ids:
+                    if task.task_id.task_name == 'Realizado Plan de Diseño':
+                        task.write({'task_completed':True})
 
 
     # Ejemplos teoría:

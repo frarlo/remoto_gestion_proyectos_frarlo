@@ -1,13 +1,19 @@
 <odoo>
     <data>
         <record model="gestion_proyectos.task" id="gestion_proyectos.task1">
-            <field name="task_name">Se ha establecido un diseño</field>
+            <field name="task_name">Asignados Productos y Materiales</field>
         </record>
         <record model="gestion_proyectos.task" id="gestion_proyectos.task2">
-            <field name="task_name">Se han asignado productos y materiales</field>
+            <field name="task_name">Asignados Operarios</field>
         </record>
         <record model="gestion_proyectos.task" id="gestion_proyectos.task3">
-            <field name="task_name">Se han establecido tareas desde un XML, qué guay!</field>
+            <field name="task_name">Asignado Vehículo</field>
+        </record>
+        <record model="gestion_proyectos.task" id="gestion_proyectos.task4">
+            <field name="task_name">Asignados Hitos</field>
+        </record>
+        <record model="gestion_proyectos.task" id="gestion_proyectos.task5">
+            <field name="task_name">Realizado Plan de Diseño</field>
         </record>
     </data>
 </odoo>

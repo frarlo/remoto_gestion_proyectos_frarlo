@@ -44,7 +44,7 @@
                 <page string="Tareas" name="page_1">
                   <group string="Listado de tareas del Proyecto">
                     <field name="tasks_ids">
-                      <tree editable="top"> <!--editable="top"-->
+                      <tree editable="top">
                         <field name="task_id" string="Nombre de la tarea" />
                         <field name="task_completed" string="Completado" />
                       </tree>
@@ -99,8 +99,8 @@
                 <page string="Hitos" name="page_6">
                   <group string="Hitos a definir para el Proyecto">
                     <field name="milestones_ids" string="Hitos" colspan="2"> 
-                      <tree>
-                        <field name="milestone_name" string="Nombre del hito"/>
+                      <tree editable="top">
+                        <field name="milestone_id" string="Nombre del hito"/>
                         <field name="milestone_completed" string="Completado" />
                       </tree>
                     </field>

@@ -36,7 +36,7 @@
         'views/templates.xml',
         # data models:
         'data/tasks.xml',
-        #'data/gestion_proyectos.project.csv',
+        'data/milestones.xml',
         # reports
         'reports/project_report.xml',
     ],

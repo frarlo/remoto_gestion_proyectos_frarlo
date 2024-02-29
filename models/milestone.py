@@ -9,4 +9,4 @@ class Milestone(models.Model):
     _rec_name = 'milestone_name'
 
     milestone_name = fields.Char(string='Nombre del hito', required = True)
-    milestone_completed = fields.Boolean(string="Cumplido", default=False)
+    project_ids = fields.One2many('gestion_proyectos.project_milestone_rel', 'milestone_id')
