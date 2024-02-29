@@ -87,7 +87,7 @@ class Design(models.Model):
                 record.recommended_aerotermics = 0
     
     # Calcula el número de baterias:
-    @api.depends('recommended_solars')            
+    @api.depends('recommended_solars','client_wants_batteries')            
     def _get_batteries(self):
         for record in self:
             record.recommended_batteries = 0

@@ -165,24 +165,23 @@
       </field>
     </record>
 
-    <record model="ir.ui.view" id="gestion_proyectos.manage_tasks">
+    <record model="ir.ui.view" id="gestion_proyectos.manage_form_tasks">
       <field name="name">Gestionar tareas </field>
       <field name="model">gestion_proyectos.task</field>
       <field name="arch" type="xml">
-        <tree>
+        <form> <!-- groups, labels, dejarlo bonito -->
           <field name="task_name" string="Nombre de la Tarea" />
-          <field name="project_ids" invisible="1" />
-        </tree>
+        </form>
       </field>
     </record>
 
-    <record model="ir.ui.view" id="gestion_proyectos.manage_milestones">
+    <record model="ir.ui.view" id="gestion_proyectos.manage_form_milestones">
       <field name="name">Gestionar Hitos </field>
       <field name="model">gestion_proyectos.milestone</field>
       <field name="arch" type="xml">
-        <tree>
+        <form>
           <field name="milestone_name" string="Nombre del Hito" />
-        </tree>
+        </form>
       </field>
     </record>
 
@@ -213,14 +212,14 @@
       <field name="name">Gestionar tareas</field>
       <field name="res_model">gestion_proyectos.task</field>
       <field name="view_mode">tree,form</field>
-      <field name="view_id" ref="gestion_proyectos.manage_tasks"/>
+      <!-- <field name="view_id" ref="gestion_proyectos.manage_form_tasks"/> -->
     </record>
 
     <record model="ir.actions.act_window" id="gestion_proyectos.action_window4">
       <field name="name">Gestionar hitos</field>
       <field name="res_model">gestion_proyectos.milestone</field>
       <field name="view_mode">tree,form</field>
-      <field name="view_id" ref="gestion_proyectos.manage_milestones"/>
+      <!-- <field name="view_id" ref="gestion_proyectos.manage_form_milestones"/> -->
     </record>
 
     <!-- Top menu item -->

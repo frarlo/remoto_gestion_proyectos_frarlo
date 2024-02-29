@@ -15,5 +15,11 @@
         <record model="gestion_proyectos.task" id="gestion_proyectos.task5">
             <field name="task_name">Realizado Plan de Diseño</field>
         </record>
+        <record model="gestion_proyectos.task" id="gestion_proyectos.task6">
+            <field name="task_name">Proyecto empezado</field>
+        </record>
+        <record model="gestion_proyectos.task" id="gestion_proyectos.task7">
+            <field name="task_name">Proyecto finalizado</field>
+        </record>
     </data>
 </odoo>

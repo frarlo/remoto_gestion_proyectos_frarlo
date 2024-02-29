@@ -187,6 +187,21 @@ class Project(models.Model):
                     if task.task_id.task_name == 'Realizado Plan de Diseño':
                         task.write({'task_completed':True})
 
+    # @api.onchange('tasks_ids','fase')
+    # def _check_project_start(self):
+    #     for record in self:
+    #         if record.tasks_ids:
+    #             for task in record.tasks_ids:
+    #                 if task.task_id.task_name == 'Proyecto empezado' and task.task_completed:
+    #                     record.fase = 'exec'
+
+    # @api.onchange('tasks_ids','fase')
+    # def _check_project_start(self):
+    #     for record in self:
+    #         if record.tasks_ids:
+    #             for task in record.tasks_ids:
+    #                 if task.task_id.task_name == 'Proyecto finalizado' and task.task_completed:
+    #                     record.fase = 'end'
 
     # Ejemplos teoría:
     # # Funciones python de restricción:
