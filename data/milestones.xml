@@ -1,13 +1,19 @@
 <odoo>
     <data>
         <record model="gestion_proyectos.milestone" id="gestion_proyectos.milestone1">
-            <field name="milestone_name">No han existido sobrecostes</field>
+            <field name="milestone_name">Se ha empezado el día acordado con el Cliente</field>
         </record>
         <record model="gestion_proyectos.milestone" id="gestion_proyectos.milestone2">
-            <field name="milestone_name">Se ha finalizado en la fecha acordada</field>
+            <field name="milestone_name">Se ha realizado el proyecto en el plazo adecuado</field>
         </record>
         <record model="gestion_proyectos.milestone" id="gestion_proyectos.milestone3">
+            <field name="milestone_name">Se ha realizado la instalación sin sobrecostes</field>
+        </record>
+        <record model="gestion_proyectos.milestone" id="gestion_proyectos.milestone4">
             <field name="milestone_name">El diseño original no ha sufrido cambios importantes</field>
+        </record>
+        <record model="gestion_proyectos.milestone" id="gestion_proyectos.milestone5">
+            <field name="milestone_name">No han existido quejas por parte del cliente</field>
         </record>
     </data>
 </odoo>

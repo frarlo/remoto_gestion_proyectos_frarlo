@@ -20,7 +20,7 @@
     <record model="ir.ui.view" id="gestion_proyectos.create_project">
       <field name="name">Crear proyecto</field>
       <field name="model">gestion_proyectos.project</field>
-        <field name="arch" type="xml">
+      <field name="arch" type="xml">
           <form>
             <!-- El header nos indica la fase actual del Proyecto-->
             <header>
