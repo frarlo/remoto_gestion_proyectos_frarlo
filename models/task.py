@@ -9,8 +9,4 @@ class Task(models.Model):
     _rec_name = 'task_name'
 
     task_name = fields.Char(string="Nombre de la tarea", required = True)
-    task_completed = fields.Boolean(string="Completada", default=False)
-
-    # TODO asociar tareas con proyectos many2many - esto es un marrón por parte de Alfredo! 
-    # Se intentó hacer un many2many con tabla intermedia pero no conseguimos separar el "completed" del modelo principal.
-    
+    project_ids = fields.One2many('gestion_proyectos.project_task_rel', 'task_id')
