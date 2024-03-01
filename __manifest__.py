@@ -35,8 +35,15 @@
         'views/views.xml',
         'views/templates.xml',
         # data models:
+        'data/res.partner.csv',
+        'data/hr.employee.csv',
+        'data/product.product.csv',
+        'data/fleet.vehicle.model.csv',
+        'data/fleet.vehicle.csv',
         'data/tasks.xml',
         'data/milestones.xml',
+        #'data/projects.xml',
+        #'data/designs.xml',
         # reports
         'reports/project_report.xml',
     ],

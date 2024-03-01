@@ -111,7 +111,6 @@
         </field>
     </record>
 
-
     <!-- Esta vista es la de crear diseño -->
     <record model="ir.ui.view" id="gestion_proyectos.create_design">
       <field name="name">Crear diseño</field>
@@ -190,12 +189,6 @@
       </field>
     </record> 
 
-    <!-- <record model="ir.ui.view" id="gestion_proyectos.design">
-      <field name="name">Crear proyecto</field>
-      <field name="model">gestion_proyectos.design</field>
-      <field name="view_mode">form</field>
-    </record> -->
-    
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="gestion_proyectos.action_window">
