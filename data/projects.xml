@@ -18,6 +18,14 @@
         <field name="milestones_ids"></field>
       </record> -->
 
+      <!-- Exportar clientes mediante el csv 
+      Primero fichero a leer en data es el de cliente.
+      
+
+      Así con todos.
+    
+      -->
+
       <!-- Ejemplos TC 
       Referencia a otro modelos:
         

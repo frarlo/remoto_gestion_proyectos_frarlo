@@ -166,24 +166,30 @@
     </record>
 
     <record model="ir.ui.view" id="gestion_proyectos.manage_form_tasks">
-      <field name="name">Gestionar tareas </field>
+      <field name="name">Gestionar Tareas</field>
       <field name="model">gestion_proyectos.task</field>
       <field name="arch" type="xml">
-        <form> <!-- groups, labels, dejarlo bonito -->
-          <field name="task_name" string="Nombre de la Tarea" />
+        <form>
+          <group string="Inserta una nueva tarea">
+            <field name="task_name" />
+          </group>
+          <div>Nota: la tarea debe resumirse en una simple frase.</div>
         </form>
       </field>
     </record>
 
     <record model="ir.ui.view" id="gestion_proyectos.manage_form_milestones">
-      <field name="name">Gestionar Hitos </field>
+      <field name="name">Gestionar Hitos</field>
       <field name="model">gestion_proyectos.milestone</field>
       <field name="arch" type="xml">
         <form>
-          <field name="milestone_name" string="Nombre del Hito" />
+          <group string="Inserta un nuevo hito">
+            <field name="milestone_name" />
+          </group>
+          <div>Nota: el hito debe resumirse en una simple frase.</div>
         </form>
       </field>
-    </record>
+    </record> 
 
     <!-- <record model="ir.ui.view" id="gestion_proyectos.design">
       <field name="name">Crear proyecto</field>
@@ -200,7 +206,6 @@
         <field name="view_id" ref="gestion_proyectos.list"/>
     </record>
 
-
     <record model="ir.actions.act_window" id="gestion_proyectos.action_window2">
       <field name="name">Crear proyecto</field>
       <field name="res_model">gestion_proyectos.project</field>
@@ -212,14 +217,12 @@
       <field name="name">Gestionar tareas</field>
       <field name="res_model">gestion_proyectos.task</field>
       <field name="view_mode">tree,form</field>
-      <!-- <field name="view_id" ref="gestion_proyectos.manage_form_tasks"/> -->
     </record>
 
     <record model="ir.actions.act_window" id="gestion_proyectos.action_window4">
       <field name="name">Gestionar hitos</field>
       <field name="res_model">gestion_proyectos.milestone</field>
       <field name="view_mode">tree,form</field>
-      <!-- <field name="view_id" ref="gestion_proyectos.manage_form_milestones"/> -->
     </record>
 
     <!-- Top menu item -->
