@@ -21,10 +21,9 @@ class Project(models.Model):
     # Ingeniero:
     ingeniero_id = fields.Many2one('hr.employee', string= 'Ingeniero', required=True, domain="[('job_title', '=', 'Ingeniero')]")  
 
-    # Fase - Al crear se debería autoseleccionar Planificación y no poder cambiarse.                        #TODO que sea un stage.id?
+    # Fase - Al crear se debería autoseleccionar Planificación y no poder cambiarse.                        
     fase = fields.Selection([('plan', 'Planificación'), ('exec', 'Ejecución'), ('end', 'Finalización')],
-                            default= 'plan',    # Fase predeterminada de inicio
-                            readonly= True)     # El usuario no puede cambiarla manualmente
+                            default= 'plan')    # Fase predeterminada de inicio   
 
     # Pagina 1. Tareas - El proyecto tiene una lista de tareas que implementar. 
     tasks_ids = fields.One2many('gestion_proyectos.project_task_rel', 'project_id')
@@ -81,7 +80,7 @@ class Project(models.Model):
     def _generate_id(self):
         for record in self:
             if record.cliente_id and record.fecha_inicio:
-                auto_id = f"PROYECTO {record.cliente_id.name}/{record.fecha_inicio.strftime('%m%d')}"
+                auto_id = f"PROYECTO {record.cliente_id.name}/{record.fecha_inicio.strftime('%d%m')}/MXPW"
                 record.auto_id = auto_id.upper()
             else:
                 record.auto_id = ""
@@ -100,7 +99,7 @@ class Project(models.Model):
                 'res_model':'gestion_proyectos.design',
                 'view_mode':'form',
                 'target':'new',
-                'context': {'default_project_id': self.id }} # New
+                'context': {'default_project_id': self.id }}
     # Asignamos el contexto de crear: el project id del diseño será el propio ID del Proyecto. 
    
     # Función que carga todas las tareas automáticamente al iniciar un Proyecto:
@@ -114,7 +113,7 @@ class Project(models.Model):
             tasks_list = []
             # Bucle que recorre cada tarea de todas las existentes...
             for task in available_tasks:
-                # ... y las añade a la lista:
+                # ... y las añade a la lista con append (asignando el id del proyecto con el self y la tarea con la misma tarea)
                 tasks_list.append((0, 0, {'project_id':self.id, 'task_id':task.id}))
             # Asociamos todas las tareas de forma predefinida:
             self.tasks_ids = tasks_list
@@ -130,14 +129,11 @@ class Project(models.Model):
             self.milestones_ids = milestones_list
     
     # Función compute para obtener el diseño específico de un proyecto.
-    @api.depends('designs_ids','fase')
+    @api.depends('designs_ids')
     def _compute_project_design(self):
         for record in self:
             if len(record.designs_ids) > 0:
                 record.design_id = record.designs_ids[0]
-                # Esto sería conveniente moverlo a otro sitio (puede crearse un diseño y no estar listo aun)
-                if record.design_id:
-                    record.fase = 'exec'    # Si el proyecto tiene un design_id quiere decir que tiene un diseño y puede pasar a fase de ejecución
 
     # Función inverse para proporcionar al proyecto el diseño específico:
     def _inverse_project_design(self):
@@ -148,7 +144,7 @@ class Project(models.Model):
             record.design_id.project_id = record
 
     # Funciones que marcan automáticamente las tareas del Proyecto
-    @api.onchange('tasks_ids','products_ids','materials_ids')   # Productos y materiales
+    @api.onchange('tasks_ids','products_ids','materials_ids')
     def _check_products_materials_task(self):
         if self.products_ids and self.materials_ids:
             for task in self.tasks_ids:
@@ -179,7 +175,7 @@ class Project(models.Model):
                     if task.task_id.task_name == 'Asignados Hitos':
                         task.write({'task_completed':True})
 
-    @api.onchange('tasks_ids','design_id') # Lo actualiza pero no de forma directa. Revisar
+    @api.onchange('tasks_ids','design_id')
     def _check_design_task(self):
         for record in self:
             if record.design_id:
@@ -187,32 +183,13 @@ class Project(models.Model):
                     if task.task_id.task_name == 'Realizado Plan de Diseño':
                         task.write({'task_completed':True})
 
-    # @api.onchange('tasks_ids','fase')
-    # def _check_project_start(self):
-    #     for record in self:
-    #         if record.tasks_ids:
-    #             for task in record.tasks_ids:
-    #                 if task.task_id.task_name == 'Proyecto empezado' and task.task_completed:
-    #                     record.fase = 'exec'
-
-    # @api.onchange('tasks_ids','fase')
-    # def _check_project_start(self):
-    #     for record in self:
-    #         if record.tasks_ids:
-    #             for task in record.tasks_ids:
-    #                 if task.task_id.task_name == 'Proyecto finalizado' and task.task_completed:
-    #                     record.fase = 'end'
-
-    # Ejemplos teoría:
-    # # Funciones python de restricción:
-    # @api.constrains('id')
-    # def _check_id(self):
-    #     for record in self:
-    #         pattern = re.compile('[A-Z]{2}\d{3}$') #If used import re
-    #         if not pattern.match(record.code):
-    #             raise ValidationError('El formato debe ser XXYYY')
-            
-    #   Restricciones SQL:
-    #   _sql_constraints = (
-    #       ('unique_id', 'unique(id)', 'El código debe ser único')    
-    #    )
+    # Función que se encarga de cambiar la fase dinámicamente según se completen las tareas asociadas:
+    @api.onchange('tasks_ids','fase')
+    def _check_project_status(self):
+        for record in self:
+            if record.tasks_ids:
+                for task in record.tasks_ids:
+                    if task.task_id.task_name == 'Proyecto empezado' and task.task_completed:
+                        record.fase = 'exec'
+                    elif task.task_id.task_name == 'Proyecto finalizado' and task.task_completed:
+                        record.fase = 'end'

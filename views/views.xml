@@ -24,7 +24,7 @@
           <form>
             <!-- El header nos indica la fase actual del Proyecto-->
             <header>
-              <field name="fase" widget="statusbar" options="{'clickable': '0'}"/>
+              <field name="fase" widget="statusbar" options="{'clickable': 0}"/>
             </header>
             <!-- La parte de arriba de la vista muestra los datos básicos del Proyecto-->
             <sheet>
@@ -66,7 +66,6 @@
                     <field name="products_ids" string="Productos" colspan="2">
                       <tree>
                         <field name="name" string="Producto" />
-                        <!-- <field name="qty_available" string="Existencias" /> -->
                       </tree>
                     </field>
                     <field name="materials_ids" string="Materiales">
