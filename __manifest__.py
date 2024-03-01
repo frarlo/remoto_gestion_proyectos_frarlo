@@ -42,7 +42,7 @@
         'data/fleet.vehicle.csv',
         'data/tasks.xml',
         'data/milestones.xml',
-        #'data/projects.xml',
+        'data/projects.xml',
         #'data/designs.xml',
         # reports
         'reports/project_report.xml',

@@ -1,5 +1,5 @@
 id,name,categ_id
-79,Aerogenerador A-30,Productos Instalables
-80,PlaCas 40-W,Productos Instalables
-81,Conversor Voltaje,Materiales
-82,Acoples cables,Materiales
+product.product_1,Aerogenerador A-30,Productos Instalables
+product.product_2,PlaCas 40-W,Productos Instalables
+product.product_3,Conversor Voltaje,Materiales
+product.product_4,Acoples cables,Materiales

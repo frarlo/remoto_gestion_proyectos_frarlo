@@ -1,2 +1,3 @@
 id,name,brand_id,vehicle_type
 vehicle.model_1,Sprinter,Mercedes,Automóvil
+vehicle.model_2,ProAce GLP,Toyota,Automóvil
