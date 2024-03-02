@@ -1,0 +1,15 @@
+<odoo>
+    <data >
+      <!-- Diseños -->
+      <record model="gestion_proyectos.design" id="gestion_proyectos.design_ALPHA">
+        <field name="project_id"></field>
+        <field name="project_type">tipo6</field>
+        <field name="client_observations">Se requiere instalar un cargador al jefe, qué pesado.</field>
+        <field name="engineer_observations">Aislamiento eléctrico adicional necesario, nieva bastante. </field>
+        <field name="recommended_location">Plaza de garaje 01-A. Lado derecho. A nombre de "Michael Scott"</field>
+        <field name="car_type">type2</field>
+        <field name="charger_type">Carga semirrápida / acelerada</field>
+      </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,36 @@
+<odoo>
+    <data >
+
+      <!-- Proyectos -->
+      <record model="gestion_proyectos.project" id="gestion_proyectos.project_ALPHA">
+        <field name="auto_id">PROYECTO DUNDER MIFFLIN/9999/MXPW</field>
+        <field name="cliente_id" ref="res.partner1"/>
+        <field name="fecha_inicio">2025-01-10</field>
+        <field name="fecha_estimada">2025-02-20</field>
+        <field name="ingeniero_id" ref="hr.employee1"/>
+        <field name="fase">plan</field>
+        <field name="tasks_ids" eval="[(6,0,[ref('gestion_proyectos.task1'),ref('gestion_proyectos.task2')])]"/>
+        <field name="design_id" ref="gestion_proyectos.design_ALPHA" />
+        <field name="products_ids" eval="[(6,0,[ref('product.product_1'),ref('product.product_2')])]" />
+        <field name="materials_ids" eval="[(6,0,[ref('product.product_3'),ref('product.product_4')])]" />
+        <field name="operarios_ids" eval="[(6,0,[ref('hr.employee3'),ref('hr.employee4')])]" />
+        <field name="vehiculos_ids" eval="[(6,0,[ref('fleet.vehicle1'),ref('fleet.vehicle2')])]"/>
+        <field name="milestones_ids" eval="[(6,0,[ref('gestion_proyectos.milestone1'),ref('gestion_proyectos.milestone2')])]"/>
+      </record>
+
+      <record model="gestion_proyectos.project" id="gestion_proyectos.project_BRAVO">
+        <field name="auto_id">PROYECTO TOMACCO INC/8888/MXPW</field>
+        <field name="cliente_id" ref="res.partner2"/>
+        <field name="fecha_inicio">2030-01-10</field>
+        <field name="ingeniero_id" ref="hr.employee2"/>
+        <field name="fase">plan</field>
+        <field name="tasks_ids" eval="[(6,0,[ref('gestion_proyectos.task3'),ref('gestion_proyectos.task4')])]"/>
+        <field name="products_ids" eval="[(6,0,[ref('product.product_1'),ref('product.product_2')])]" />
+        <field name="materials_ids" eval="[(6,0,[ref('product.product_3'),ref('product.product_4')])]" />
+        <field name="operarios_ids" eval="[(6,0,[ref('hr.employee3'),ref('hr.employee4')])]" />
+        <field name="vehiculos_ids" eval="[(6,0,[ref('fleet.vehicle1')])]"/>
+        <field name="milestones_ids" eval="[(6,0,[ref('gestion_proyectos.milestone3'),ref('gestion_proyectos.milestone4')])]"/>
+      </record>
+    
+  </data>
+</odoo>
