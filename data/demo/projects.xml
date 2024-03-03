@@ -1,8 +1,8 @@
 <odoo>
-    <data >
+    <data noupdate="1">
 
       <!-- Proyectos -->
-      <record model="gestion_proyectos.project" id="gestion_proyectos.project_ALPHA">
+      <record model="gestion_proyectos.project" id="gestion_proyectos.project_ALPHA" forcecreate="0">
         <field name="auto_id">PROYECTO DUNDER MIFFLIN/9999/MXPW</field>
         <field name="cliente_id" ref="res.partner1"/>
         <field name="fecha_inicio">2025-01-10</field>
@@ -18,7 +18,7 @@
         <field name="milestones_ids" eval="[(6,0,[ref('gestion_proyectos.milestone1'),ref('gestion_proyectos.milestone2')])]"/>
       </record>
 
-      <record model="gestion_proyectos.project" id="gestion_proyectos.project_BRAVO">
+      <record model="gestion_proyectos.project" id="gestion_proyectos.project_BRAVO" forcecreate="0">
         <field name="auto_id">PROYECTO TOMACCO INC/8888/MXPW</field>
         <field name="cliente_id" ref="res.partner2"/>
         <field name="fecha_inicio">2030-01-10</field>

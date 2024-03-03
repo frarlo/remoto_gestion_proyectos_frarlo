@@ -28,7 +28,7 @@ class Project(models.Model):
     # Pagina 1. Tareas - El proyecto tiene una lista de tareas que implementar. 
     tasks_ids = fields.One2many('gestion_proyectos.project_task_rel', 'project_id')
     
-    # Pagina 2. Diseño del Proyecto - Cada proyecto tiene un diseño específico. Necesita un compute y un inverse para hacer get del diseño y settearlo
+    # Pagina 2. Diseño del Proyecto - Cada proyecto tiene un diseño específico - one2one manual:
     design_id = fields.Many2one('gestion_proyectos.design', compute='_compute_project_design', inverse='_inverse_project_design')
     designs_ids = fields.One2many('gestion_proyectos.design', 'project_id')
     
@@ -41,15 +41,14 @@ class Project(models.Model):
     # Materiales con tabla intermedia para manejar el many2many en una misma tabla con productos:
     materials_ids = fields.Many2many('product.product', string= 'Materiales', relation='project_materials', column1='product_id', column2='project_id',
                                      domain="[('categ_id', '=', 'Materiales')]")
-    # TODO: Materiales escogidos automáticamente en función de los productos
 
-    # Página 4 - Operarios. Asignamos operarios al proyecto. TODO: Marcar el operario como no disponible en la fecha?
+    # Página 4 - Operarios. Asignamos operarios al proyecto.
     operarios_ids = fields.Many2many('hr.employee', string= 'Operarios', required=True, domain="[('job_title', '=', 'Operario')]")
 
-    # Página 5 - Vehículo. Asignamos vehículos al proyecto. TODO: Marcar el vehículo como no disponible en la fecha?
-    vehiculos_ids = fields.Many2many('fleet.vehicle', string = 'Vehiculo', required=True) #TODO Domain - 'Tipoinstalación'
+    # Página 5 - Vehículo. Asignamos vehículos al proyecto.
+    vehiculos_ids = fields.Many2many('fleet.vehicle', string = 'Vehiculo', required=True)
 
-    # Página 6 - Milestones (hitos). Los proyectos tienen unos hitos asociados. # TODO: Gestionar las tablas y sus estados
+    # Página 6 - Milestones (hitos). Los proyectos tienen unos hitos asociados.
     milestones_ids = fields.One2many('gestion_proyectos.project_milestone_rel', 'project_id')
 
     ### - Restricciones y campos computados - ###

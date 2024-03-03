@@ -16,7 +16,7 @@
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
-    'category': 'Services', # Not sure
+    'category': 'Services',
     'version': '0.1',
 
     # any module necessary for this one to work correctly
@@ -27,7 +27,7 @@
     'images': ['static/description/icon.png'],
 
     # always loaded
-    'data': [               #TODO - Demo data
+    'data': [               
         # security:
         'security/groups.xml',
         'security/access.xml',
@@ -44,6 +44,7 @@
         'data/demo/milestones.xml',
         'data/demo/designs.xml',
         'data/demo/projects.xml',
+        #'data/demo/res.users.csv', # Tres usuarios para los tres roles del módulo
         # reports
         'reports/project_report.xml',
     ],

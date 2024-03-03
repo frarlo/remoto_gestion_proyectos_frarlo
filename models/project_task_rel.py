@@ -7,8 +7,10 @@ class ProjectTaskRel(models.Model):
     _name = 'gestion_proyectos.project_task_rel'
     _description = 'Gestiona tareas y estados'
 
-    project_id = fields.Many2one('gestion_proyectos.project', required = True)
+    project_id = fields.Many2one('gestion_proyectos.project', required = True, ondelete="Cascade")
     task_id = fields.Many2one('gestion_proyectos.task', string="Tarea", required=True)
 
     task_completed = fields.Boolean(default=False)
 
+    # Este modelo crea una tabla intermedia. Se tuvo que añadir un ondelete cascade para que, si quisiéramos
+    # borrar un Proyecto, se borren todas las tareas asociadas al mismo.

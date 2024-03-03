@@ -1,0 +1,4 @@
+id,name,login,password
+res.users_frink,Profesor Frink,frink,frink
+res.users_nelson,Nelson Muntz,nelson,nelson
+res.users_patty,Patty Bouvier,patty,patty

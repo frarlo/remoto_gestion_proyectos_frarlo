@@ -92,7 +92,7 @@ class Design(models.Model):
         for record in self:
             record.recommended_batteries = 0
             if record.recommended_solars and record.client_wants_batteries and record.project_type == 'tipo1':
-                record.recommended_batteries = record.recommended_solars // 5    # Example, not sure
+                record.recommended_batteries = record.recommended_solars // 5
             else:
                 record.recommended_batteries = 0
     
