@@ -4,6 +4,50 @@ layout: default
 
 # Módulo Gestión de Proyectos
 
+## Documentación Módulo
+
+### Instalación y configuración de gestion_proyectos:
+
+Para instalar el módulo nos desplazaremos a la pestaña de Aplicaciones en odoo y buscaremos el módulo, que luce así:
+
+![Instalación de Gestión de Proyectos](img/instalacion.png)
+
+Una vez instalado el módulo lo primero que tendremos que hacer es asignar los permisos en función de los roles disponibles:
+
+![Asignación de permisos](img/permisos.png)
+
+Una vez realizado esto el módulo esta listo para ser usado, veamos a continuación un resumen breve de su funcionamiento.
+
+### Uso de gestion_proyectos:
+
+La vista principal del módulo nos ofrece un resumen de los proyectos existentes en MaxPower:
+
+![Pantalla principal](img/pantprincipal.png)
+
+Los usuarios podrán ver (o modificar y crear en función de su rol) tareas:
+
+![Tareas](img/tareas.png)
+
+Y también hitos:
+
+![Hitos](img/hitos.png)
+
+La vista (simplificada, hay más pestañas) de la creación de Proyectos es la siguiente:
+
+![Creación de Proyecto](img/crearproyecto.png)
+
+Los diseños asociados a los Proyectos son una parte muy importante de este módulo y, en caso de que un Proyecto aún no tenga un diseño lucirá así:
+
+![Pestaña Diseño](img/creardiseño.png)
+
+Una vez pulsemos en crear diseño nos aparecerá una ventana emergente para crear, ver o modificar los datos del diseño asociado a nuestro proyecto:
+
+![Editando diseño](img/editardiseño.png)
+
+Finalmente, nuestro módulo habilita una pequeña opción para mostrar informes de los Proyectos:
+
+![Informes](img/informes.png)
+
 ## Descripción Corta
 
 Este módulo gestionará los Proyectos (de tipo Instalación) de MaxPower. Incluyendo la creación, edición, comprobación y eliminación de proyectos.

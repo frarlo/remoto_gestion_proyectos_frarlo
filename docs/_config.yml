@@ -21,7 +21,7 @@
 title: Gestión de Proyectos
 email: fraarmlop@alu.edu.gva.es
 description: >- # this means to ignore newlines until "baseurl:"
-  Documentación relativa a la entrega de la Fase IV - Gestión de Proyectos.
+  Documentación relativa a la entrega de la Fase IV y V - Gestión de Proyectos.
 baseurl: #"/remoto_gestion_licencias_frarlo" # the subpath of your site, e.g. /blog
 url: "http://www.github.com/frarlo" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: frarlo
